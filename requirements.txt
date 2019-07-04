@@ -1,1 +1,2 @@
 flask>=1.0.3
+flask-login>=0.4.1
