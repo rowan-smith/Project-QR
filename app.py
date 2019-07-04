@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, session
 
 app = Flask(__name__)
 
@@ -8,14 +8,19 @@ def index_page():
     return render_template('index.html')
 
 
-@app.route('/home/<name>')
-def home_page(name: str):
-    return render_template('home.html', name=name)
+@app.route('/home')
+def home_page():
+
+    # Check is flask session is active
+    if session is None:
+        return redirect(url_for('login_page'))
+
+    return render_template('home.html')
 
 
 @app.route('/login')
 def login_page():
-    return 'This is the login page.'
+    return render_template('login_page.html')
 
 
 if __name__ == '__main__':
