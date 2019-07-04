@@ -104,4 +104,7 @@ venv.bak/
 .mypy_cache/
 
 #misc
+misc.xml
 .idea
+workspace.xml
+Project-QR.iml
