@@ -6,7 +6,7 @@
 </head>
    <body>
 
-      <img src="{{ qrcode("Load icon image from static folder.", box_size=60, error_correction='H', icon_img='logo.jpg')  }}">
+      <img src="{{ qrcode(url, box_size=size, error_correction='H', icon_img='logo.jpg', factor=3, back_color=colour, fill_color='black')  }}">
 
    </body>
 </html>
