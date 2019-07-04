@@ -6,7 +6,11 @@
 </head>
    <body>
 
-        <p>QR Information</p>
+        {% if building %}
+        <p>Congratulations! You found {{ building }}!</p>
+        {% else %}
+        <p>Invalid building!</p>
+        {% endif %}
 
    </body>
 </html>

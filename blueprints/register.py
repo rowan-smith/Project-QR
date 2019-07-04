@@ -2,7 +2,7 @@ import uuid
 
 from flask import Blueprint, render_template, request
 
-from User import User
+from classes.User import User
 from app import db
 
 register_blueprint = Blueprint('register_page', __name__)

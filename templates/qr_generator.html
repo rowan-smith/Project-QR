@@ -5,8 +5,13 @@
      <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
 </head>
    <body>
-
-      <img src="{{ qrcode(url, box_size=size, error_correction='H', icon_img='logo.jpg', factor=3, back_color=colour, fill_color='black')  }}">
+      {% if data['image'] == 'default' %}
+      <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img='logo.jpg', factor=3, back_color=data['colour'], fill_color='black')  }}">
+      {% elif data['image'] == 'none' %}
+      <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', factor=3, back_color=data['colour'], fill_color='black')  }}">
+      {% else %}
+      <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img=data['image'], factor=3, back_color=data['colour'], fill_color='black')  }}">
+      {% endif %}
 
    </body>
 </html>

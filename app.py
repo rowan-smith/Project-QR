@@ -18,7 +18,7 @@ from blueprints.index import index_blueprint
 from blueprints.login import login_blueprint
 from blueprints.register import register_blueprint
 from blueprints.qr_generator_page import qr_gen_blueprint
-from blueprints.qr_scan_page import qr_code_blueprint
+from blueprints.qr_scanner_page import qr_code_blueprint
 
 db.create_all()
 
