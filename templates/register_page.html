@@ -1,32 +1,36 @@
 <!doctype html>
 <html lang="en">
-    <body>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/site_styles.css">
+</head>
+<body>
 
-        <form method="post">
-            Name*<br>
-            <label>
-                <input type="text" name="user-name" required>
-            </label><br>
+<form method="post" class="center_vertical_horizontal">
+    Name*<br>
+    <label>
+        <input type="text" name="user-name" required>
+    </label><br>
 
-            Username*<br>
-            <label>
-                <input type="text" name="user-username" required>
-            </label><br>
+    Username*<br>
+    <label>
+        <input type="text" name="user-username" required>
+    </label><br>
 
-            Email Address*<br>
-            <label>
-                <input type="text" name="user-email" required>
-            </label><br>
+    Email Address*<br>
+    <label>
+        <input type="text" name="user-email" required>
+    </label><br>
 
-            Password*<br>
-            <label>
-                <input type="password" name="user-pass" required>
-            </label><br>
+    Password*<br>
+    <label>
+        <input type="password" name="user-pass" required>
+    </label><br>
 
-            <input type="submit" value="Sign Up"><br>
+    <input type="submit" value="Sign Up"><br>
 
-            Already Registered? <a href="{{ url_for('login_page.login_page') }}">Login!</a>
-        </form>
+    Already Registered? <a href="{{ url_for('login_page.login_page') }}">Login!</a>
+</form>
 
-    </body>
+</body>
 </html>

@@ -1,12 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../static/site_styles.css">
     <title>Login</title>
+    <link rel="stylesheet" href="../static/site_styles.css">
 </head>
 <body>
 
-<form method="post">
+<form method="post" class="center_vertical_horizontal">
+    <h2>JCU Open Day QR Code Hunt</h2>
+    {% if error %}
+    <p class="error"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
     Username or Email Address<br>
     <label>
         <input type="text" name="user-username">
