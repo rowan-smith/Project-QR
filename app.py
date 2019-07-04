@@ -1,38 +1,18 @@
 import os
 
-from flask import Flask, render_template, redirect, url_for, session, request, flash
+from flask import Flask
+
+from blueprints.index import index_blueprint
+from blueprints.home import home_blueprint
+from blueprints.login import login_blueprint
+from blueprints.register import register_blueprint
 
 app = Flask(__name__)
 
-
-@app.route('/')
-def index_page():
-    return render_template('index.html')
-
-
-@app.route('/home')
-def home_page():
-
-    if session.get('logged_in') is None:
-        return redirect(url_for('login_page'))
-
-    return render_template('home.html')
-
-
-@app.route('/login')
-def login_page():
-    x = None
-    if x:
-        session['logged_in'] = True
-        return render_template('home.html')
-    else:
-        flash('wrong password!')
-        return render_template('login_page.html')
-
-
-@app.route('/register')
-def register_page():
-    return render_template('register_page.html')
+app.register_blueprint(home_blueprint)
+app.register_blueprint(index_blueprint)
+app.register_blueprint(login_blueprint)
+app.register_blueprint(register_blueprint)
 
 
 if __name__ == '__main__':
