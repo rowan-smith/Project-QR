@@ -1,2 +1,2 @@
 flask>=1.0.3
-flask-login>=0.4.1
+flask_sqlalchemy>=2.4.0

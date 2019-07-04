@@ -7,6 +7,9 @@
 <body>
 
 <form method="post" class="center_vertical_horizontal">
+    {% if error %}
+    <p class="error"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
     Name*<br>
     <label>
         <input type="text" name="user-name" required>

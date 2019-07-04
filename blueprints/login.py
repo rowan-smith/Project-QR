@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, request
 
+# from User import User
+
 login_blueprint = Blueprint('login_page', __name__)
 
 
@@ -12,20 +14,28 @@ def login_page():
         if request.method == 'POST':
 
             # Check if username is in database
-            if request.form['user-username'] == 'Rono':
-                print("Accepted")
-            else:
-                return render_template('login_page.html', error="username or password is incorrect!")
+            # user = User.query.filter_by(username=request.form['user-username']).first()
+            # is_user = user.check_password(request.form['user-pass'])
+            #
+            # if is_user:
+            #     print("FUCK YES CUNT")
 
-            # Check if hash password matches hash in database
-            if request.form['user-pass'] == 'password':
-                print("Accepted")
-            else:
-                return render_template('login_page.html', error="username or password is incorrect!")
 
-            # If hash matches create a permanent session and set session to true
 
-            session['logged_in'] = True
+            # if request.form['user-username'] == 'Rono':
+            #     print("Accepted")
+            # else:
+            #     return render_template('login_page.html', error="username or password is incorrect!")
+            #
+            # # Check if hash password matches hash in database
+            # if request.form['user-pass'] == 'password':
+            #     print("Accepted")
+            # else:
+            #     return render_template('login_page.html', error="username or password is incorrect!")
+            #
+            # # If hash matches create a permanent session and set session to true
+            #
+            # session['logged_in'] = True
             return render_template('home.html')
 
         if request.method == 'GET':
