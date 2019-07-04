@@ -26,6 +26,7 @@ def login_page():
             # Initiate user login
             # TODO CREATE SECURE SESSION HERE
             # TODO CREATE PERMANENT SESSION COOKIE
+
             return render_template('home.html', user=user)
 
         return render_template('login_page.html')
