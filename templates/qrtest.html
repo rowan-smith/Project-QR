@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+     <title>Home</title>
+     <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
+</head>
+   <body>
+
+      <img src="{{ qrcode("Load icon image from static folder.", box_size=60, error_correction='H', icon_img='icon.jpg')  }}">
+
+   </body>
+</html>
