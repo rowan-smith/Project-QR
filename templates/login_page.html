@@ -1,22 +1,25 @@
 <!doctype html>
 <html lang="en">
-    <body>
+<head>
+    <link rel="stylesheet" href="site_styles.css">
+</head>
+<body>
 
-        <form>
-            Username or Email Address<br>
-            <label>
-                <input type="text" name="user-username">
-            </label><br>
+<form>
+    Username or Email Address<br>
+    <label>
+        <input type="text" name="user-username">
+    </label><br>
 
-            Password<br>
-            <label>
-                <input type="password" name="user-pass">
-            </label><br>
+    Password<br>
+    <label>
+        <input type="password" name="user-pass">
+    </label><br>
 
-            <input type="submit" value="Login"><br>
+    <input type="submit" value="Login"><br>
 
-            Not Registered? <a href="{{ url_for('register_page.register_page') }}">Create an account!</a>
-        </form>
+    Not Registered? <a href="{{ url_for('register_page.register_page') }}">Create an account!</a>
+</form>
 
-    </body>
+</body>
 </html>
