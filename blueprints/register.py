@@ -10,16 +10,19 @@ register_blueprint = Blueprint('register_page', __name__)
 
 @register_blueprint.route('/register', methods=['POST', 'GET'])
 def register_page():
-
     if request.method == 'POST':
 
         if User.query.filter_by(username=request.form['user-username']).first() is not None:
-            error = f"The username {request.form['user-username']} already exists. Please choose another!"
-            return render_template('register_page.html', error=error)
+            return render_template('register_page.html',
+                                   error_msg_start="The username",
+                                   duplicate_value=request.form['user-username'],
+                                   error_msg_end="already exists. Please choose another!")
 
         if User.query.filter_by(email=request.form['user-email']).first() is not None:
-            error = f"The email {request.form['user-email']} already exists. Please choose another!"
-            return render_template('register_page.html', error=error)
+            return render_template('register_page.html',
+                                   error_msg_start="The email",
+                                   duplicate_value=request.form['user-email'],
+                                   error_msg_end="already exists. Please choose another!")
 
         db.session.add(User(id=str(uuid.uuid4()),
                             name=request.form['user-name'],
