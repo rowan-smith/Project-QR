@@ -1,16 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def index_page():
-    return 'This is the page people first see.'
+    return render_template('index.html')
 
 
-@app.route('/home')
-def home_page():
-    return 'This is the home page for users that are logged in.'
+@app.route('/home/<name>')
+def home_page(name: str):
+    return render_template('home.html', name=name)
 
 
 @app.route('/login')
