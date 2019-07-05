@@ -15,7 +15,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
 
     # User game information
-    points = db.Column(db.Integer)
+    points = db.Column(db.Integer, nullable=True)
 
     @staticmethod
     def set_password(password):
