@@ -1,0 +1,5 @@
+# TODO create a way to add and remove locations
+
+# TODO Create counter for users to scan
+
+# TODO Possible bridging table.

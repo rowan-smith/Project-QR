@@ -6,7 +6,7 @@ qr_code_blueprint = Blueprint('qr_code_page', __name__)
 
 
 @qr_code_blueprint.route('/scan', methods=['GET'])
-def qr_scanner():
+def qr_scan():
 
     if len(request.values) == 0:
         return render_template('qr_scanner.html')

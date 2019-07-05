@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request
+from flask import Blueprint, render_template, session, request, url_for
 
 from models.User import User
 
@@ -6,9 +6,9 @@ login_blueprint = Blueprint('login_page', __name__)
 
 
 @login_blueprint.route('/login', methods=['POST', 'GET'])
-def login_page():
+def login():
 
-    if session.get('logged_in') is None:
+    if 'username' not in session:
 
         if request.method == 'POST':
 
@@ -35,8 +35,8 @@ def login_page():
                 session['is_admin'] = False
             ############################################################
 
-            return render_template('home.html', user=user)
+            return render_template('home.html', session=session)
 
         return render_template('login_page.html')
 
-    return render_template('home.html')
+    return render_template('home.html', session=session)
