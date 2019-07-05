@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Home</title>
+    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
+</head>
+   <body>
+
+      <h2>QR Code Locations</h2>
+
+        {% if locations %}
+            <table>
+              <tr>
+                <th>Location Name</th>
+                <th>Bonus</th>
+                <th>QR Link</th>
+                <th>Points</th>
+              </tr>
+
+              {% for i in locations %}
+              <tr>
+                <td>{{ i.name }}</td>
+
+                {% if i.bonus %}
+                <td>Yes</td>
+                {% else %}
+                <td>No</td>
+                {% endif %}
+
+                <td><a href="http://127.0.0.1:5000/qr?url=http://127.0.0.1:5000/scan?location={{ i.uuid }}" target="_blank">QR Code</a></td>
+
+                <td>{{ i.points }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+        {% else %}
+            <p>No Locations Available</p>
+        {% endif %}
+
+   </body>
+</html>

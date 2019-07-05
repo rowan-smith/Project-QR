@@ -31,7 +31,6 @@ def register_page():
                     password_hash=User.set_password(request.form['user-pass']))
 
         db.session.add(user)
-
         db.session.commit()
 
         return render_template('home.html', user=user)

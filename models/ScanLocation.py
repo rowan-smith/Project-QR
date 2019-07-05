@@ -12,6 +12,8 @@ class ScanLocation(db.Model):
     bonus = db.Column(db.Boolean, nullable=True)
     uuid = db.Column(db.String(32))
 
+    points = db.Column(db.Integer)
+
     def get_location_hash(self):
         return self.unique_hash
 
@@ -23,14 +25,3 @@ class ScanLocation(db.Model):
 
     def __repr__(self):
         return f'<ScanLocation {self.name}>'
-
-
-if __name__ == '__main__':
-
-    scan = ScanLocation(name='The Science Place', bonus=False, uuid=uuid.uuid4().hex)
-
-    print(scan.name)
-
-    db.session.add(ScanLocation(name='The Science Place', bonus=False, uuid=uuid.uuid4().hex))
-
-    db.create_all()
