@@ -2,7 +2,7 @@ import uuid
 
 from flask import Blueprint, render_template, request
 
-from classes.User import User
+from models.User import User
 from app import db
 
 register_blueprint = Blueprint('register_page', __name__)
@@ -24,12 +24,16 @@ def register_page():
                                    duplicate_value=request.form['user-email'],
                                    error_msg_end="already exists. Please choose another!")
 
-        db.session.add(User(id=str(uuid.uuid4()),
-                            name=request.form['user-name'],
-                            username=request.form['user-username'],
-                            email=request.form['user-email'],
-                            password_hash=User.set_password(request.form['user-pass'])))
+        user = User(uuid=str(uuid.uuid4()),
+                    name=request.form['user-name'],
+                    username=request.form['user-username'],
+                    email=request.form['user-email'],
+                    password_hash=User.set_password(request.form['user-pass']))
+
+        db.session.add(user)
 
         db.session.commit()
+
+        return render_template('home.html', user=user)
 
     return render_template('register_page.html')
