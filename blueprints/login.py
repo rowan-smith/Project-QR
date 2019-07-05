@@ -23,9 +23,17 @@ def login_page():
                 error = "The username or password was invalid!"
                 return render_template('login_page.html', error=error)
 
+            ############################################################
             # Initiate user login
             # TODO CREATE SECURE SESSION HERE
             # TODO CREATE PERMANENT SESSION COOKIE
+            session['username'] = request.form['user-username']
+
+            if user.is_admin:
+                session['is_admin'] = True
+            else:
+                session['is_admin'] = False
+            ############################################################
 
             return render_template('home.html', user=user)
 

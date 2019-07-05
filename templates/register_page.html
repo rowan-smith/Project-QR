@@ -8,9 +8,11 @@
 
 <form method="post" class="center_vertical_horizontal">
         <h3>JCU Open Day QR Code Hunt Register</h3>
-    {% if error_msg_start or duplicate_value or error_msg_end %}
-    <p class="error"><b>Error:</b> {{ error_msg_start }} <b><span style="color: red; ">{{ duplicate_value }}</span> </b> {{ error_msg_end }}</p>
+
+    {% if error %}
+    <p class="error"><b>Error: {{ error }}</b></p>
     {% endif %}
+
     Name*<br>
     <label>
         <input type="text" name="user-name" required>

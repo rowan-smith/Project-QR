@@ -27,7 +27,7 @@
                 <td>No</td>
                 {% endif %}
 
-                <td><a href="http://127.0.0.1:5000/qr?url=http://127.0.0.1:5000/scan?location={{ i.uuid }}" target="_blank">QR Code</a></td>
+                <td><a href="http://127.0.0.1:5000/qr?url={{ url }}{{ i.uuid }}" target="_blank">QR Code</a></td>
 
                 <td>{{ i.points }}</td>
               </tr>

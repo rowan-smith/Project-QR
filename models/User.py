@@ -25,6 +25,8 @@ class User(db.Model):
 
     password_hash = db.Column(db.String(128))
 
+    is_admin = db.Column(db.Boolean)
+
     # User game information
     points = db.Column(db.Integer,
                        nullable=True)
