@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, request
 
-from classes.User import User
+from models.User import User
 
 login_blueprint = Blueprint('login_page', __name__)
 
