@@ -37,6 +37,6 @@ def register():
 
             return render_template('home.html', session=session)
 
-        return render_template('home.html', session=session)
+        return render_template('register_page.html')
 
     return render_template('home.html', session=session)
