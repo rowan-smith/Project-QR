@@ -4,7 +4,6 @@ from app import db
 
 
 class User(db.Model):
-
     __tablename__ = 'users'
 
     # User admin information
@@ -30,6 +29,9 @@ class User(db.Model):
     # User game information
     points = db.Column(db.Integer,
                        nullable=True)
+
+    visited_locations = db.Column(db.String(300),
+                                  nullable=True)
 
     @staticmethod
     def set_password(password):

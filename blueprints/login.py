@@ -28,11 +28,14 @@ def login():
             # TODO CREATE SECURE SESSION HERE
             # TODO CREATE PERMANENT SESSION COOKIE
             session['username'] = request.form['user-username']
+            session['points'] = user.points
+            session['name'] = user.name
 
             if user.is_admin:
                 session['is_admin'] = True
             else:
                 session['is_admin'] = False
+
             ############################################################
 
             return render_template('home.html', session=session)

@@ -6,7 +6,15 @@
 </head>
 <body>
 
-<h1>Logged in as {{ session['username'] }}</h1>
+<h1 class="center_horizontal">Logged in as <span style="color: #4CAF50">{{ session['name'] }}</span></h1>
+
+{% if session['points'] is none %}
+    <h1 class="center_horizontal">Points: <span style="color: #4CAF50; ">0</span></h1>
+{% else %}
+    <h1 class="center_horizontal">Points:<span style="color: #4CAF50">{{ session['points'] }} </span></h1>
+{% endif %}
+
+<button type="button" onclick="window.location.href = '/logout';" class="center_vertical_horizontal">Logout</button>
 
 </body>
 </html>
