@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-     <title>QR Generator</title>
-     <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
+    <title>QR Generator</title>
+    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
 </head>
-   <body>
-      {% if data['image'] == 'default' %}
-      <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img='logo.jpg', factor=3, back_color=data['colour'], fill_color='black')  }}">
-      {% elif data['image'] == 'none' %}
-      <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', factor=3, back_color=data['colour'], fill_color='black')  }}">
-      {% else %}
-      <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img=data['image'], factor=3, back_color=data['colour'], fill_color='black')  }}">
-      {% endif %}
+<body>
+{% if data['image'] == 'default' %}
+    <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img='logo.jpg', factor=3, back_color=data['colour'], fill_color='black') }}">
+{% elif data['image'] == 'none' %}
+    <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', factor=3, back_color=data['colour'], fill_color='black') }}">
+{% else %}
+    <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img=data['image'], factor=3, back_color=data['colour'], fill_color='black') }}">
+{% endif %}
 
-   </body>
+</body>
 </html>

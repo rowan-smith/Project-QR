@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-     <title>QR Scanner</title>
-     <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
+    <title>QR Scanner</title>
+    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
 </head>
-   <body>
+<body>
 
-        {% if location %}
-        <p>Congratulations! You found {{ location }}!</p>
-        {% else %}
-        <p>Invalid location!</p>
-        {% endif %}
+{% if location %}
+    <p>Congratulations! You found {{ location }}!</p>
+{% else %}
+    <p>Invalid location!</p>
+{% endif %}
 
-   </body>
+</body>
 </html>

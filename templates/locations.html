@@ -4,38 +4,38 @@
     <title>Locations</title>
     <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
 </head>
-   <body>
+<body class="center_vertical_horizontal">
 
-      <h2>QR Code Locations</h2>
+<h2>QR Code Locations</h2>
 
-        {% if locations %}
-            <table>
-              <tr>
-                <th>Location Name</th>
-                <th>Bonus</th>
-                <th>QR Link</th>
-                <th>Points</th>
-              </tr>
+{% if locations %}
+    <table>
+        <tr>
+            <th>Location Name</th>
+            <th>Bonus</th>
+            <th>QR Link</th>
+            <th>Points</th>
+        </tr>
 
-              {% for i in locations %}
-              <tr>
+        {% for i in locations %}
+            <tr>
                 <td>{{ i.name }}</td>
 
                 {% if i.bonus %}
-                <td>Yes</td>
+                    <td>Yes</td>
                 {% else %}
-                <td>No</td>
+                    <td>No</td>
                 {% endif %}
 
                 <td><a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code</a></td>
 
                 <td>{{ i.points }}</td>
-              </tr>
-              {% endfor %}
-            </table>
-        {% else %}
-            <p>No Locations Available</p>
-        {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No Locations Available</p>
+{% endif %}
 
-   </body>
+</body>
 </html>
