@@ -19,11 +19,11 @@ def qr_scan():
         ##########################################################
         user = User.query.filter_by(username=session['username']).first()
 
-        location_list = user.visited_locations.split(",")
-
         if user.visited_locations is None:
+            location_list = []
             user.visited_locations = f"{location.id},"
         else:
+            location_list = user.visited_locations.split(",")
             user.visited_locations += f"{location.id},"
 
         if str(location.id) in location_list:

@@ -22,5 +22,3 @@ db.session.add(User(uuid=str(uuid.uuid4()),
                     is_admin=True))
 
 db.session.commit()
-
-# 1, 3, 5
