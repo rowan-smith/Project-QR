@@ -31,7 +31,9 @@ def register():
                                 password_hash=User.set_password(request.form['user-pass'])))
             db.session.commit()
 
-            session['name'] = request.form['user-username']
+            session['username'] = request.form['user-username']
+            session['points'] = 0
+            session['name'] = request.form['user-name']
             session['is_admin'] = False
 
             return render_template('home.html', session=session)
