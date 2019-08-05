@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, session, request, Response, redirect, abort, flash
+from flask import Blueprint, render_template, session, request, redirect, abort
 from flask_login import login_user
 from app import app, login_manager
-from models.LoginForm import LoginForm
+from forms.LoginForm import LoginForm
 
 from models.User import User
 

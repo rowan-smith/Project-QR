@@ -3,7 +3,7 @@ import uuid
 from flask import Blueprint, render_template, request, session, redirect
 from flask_login import login_user
 
-from models.RegistrationForm import RegistrationForm
+from forms.RegistrationForm import RegistrationForm
 from models.User import User
 from app import db
 
