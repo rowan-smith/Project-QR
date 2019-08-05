@@ -20,6 +20,8 @@ def login():
         # Checks if user exists in database
         user = User.query.filter_by(username=request.form['username']).first()
 
+        # TODO flash message if the two blocks below throw an error
+
         # check if user exists
         if user is None:
             abort(401)
@@ -30,6 +32,7 @@ def login():
             abort(401)
 
         # Logs in user
+        # TODO check for remember me functionality.
         login_user(user, remember=True)
 
         # sets user session information for use in HTML later

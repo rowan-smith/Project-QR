@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
 <head>
     <title>Register</title>
@@ -8,34 +7,29 @@
 
 <form method="post" class="center_vertical_horizontal">
     <h3>Tim Tam Time QR-Code Register</h3>
-
-    {% if error %}
-        <p class="error"><b>Error: {{ error }}</b></p>
-    {% endif %}
-
-    First & Last Name*<br>
-    <label>
-        <input type="text" name="name" required>
-    </label><br>
-
-    Username*<br>
-    <label>
-        <input type="text" name="username" required>
-    </label><br>
-
-    Email Address*<br>
-    <label>
-        <input type="text" name="email" required>
-    </label><br>
-
-    Password*<br>
-    <label>
-        <input type="password" name="password" required>
-    </label><br>
-
-    <input type="submit" value="Sign Up"><br>
-
-    Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a>
+    {{ form.csrf_token }}
+    <p>
+        {{ form.name.label }}
+        {{ form.name }}
+    </p>
+    <p>
+        {{ form.username.label }}
+        {{ form.username }}
+    </p>
+    <p>
+        {{ form.email.label }}
+        {{ form.email }}
+    </p>
+    <p>
+        {{ form.password.label }}
+        {{ form.password }}
+    </p>
+    <p>
+        {{ form.remember_me }}
+        {{ form.remember_me.label }}
+    </p>
+    {{ form.register }}
+    <p>Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a></p>
 </form>
 
 </body>
