@@ -13,7 +13,6 @@ register_blueprint = Blueprint('register_page', __name__)
 def register():
 
     if 'username' not in session:
-        print('Yes')
 
         if request.method == 'POST':
 
@@ -32,7 +31,7 @@ def register():
                                 password_hash=User.set_password(request.form['user-pass'])))
             db.session.commit()
 
-            session['username'] = request.form['user-username']
+            session['name'] = request.form['user-username']
             session['is_admin'] = False
 
             return render_template('home.html', session=session)
