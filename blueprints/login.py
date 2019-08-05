@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, request, Response, redirect, abort, flash
 from flask_login import login_user
 from app import app, login_manager
+from models.LoginForm import LoginForm
 
 from models.User import User
 
@@ -39,7 +40,7 @@ def login():
 
         return redirect('home')
 
-    return render_template('login_page.html')
+    return render_template('login_page.html', form=LoginForm())
 
 
 @login_manager.user_loader
