@@ -5,6 +5,9 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
 
+from flask_nav import Nav
+from flask_nav.elements import *
+
 DATABASE_NAME = "QR-Users.db"
 
 app = Flask(__name__)
@@ -20,6 +23,9 @@ login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
 login_manager.login_view = "login_page.login"
+
+nav = Nav()
+nav.init_app(app)
 
 
 from blueprints.home import home_blueprint
@@ -41,6 +47,11 @@ app.register_blueprint(qr_gen_blueprint)
 app.register_blueprint(qr_code_blueprint)
 app.register_blueprint(locations_blueprint)
 app.register_blueprint(logout_blueprint)
+
+top_nav = Navbar(View('Widgits, Inc.', 'index'),
+                 View('Our Mission', 'home_page.home'),
+                 Link('Tech Support', 'http://techsupport.invalid/widgits_inc'))
+nav.register_element('top', top_nav)
 
 
 if __name__ == '__main__':
