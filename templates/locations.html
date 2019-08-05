@@ -13,7 +13,7 @@
         <tr>
             <th>Location Name</th>
             <th>Bonus</th>
-            <th>QR Link</th>
+            <th>Links</th>
             <th>Points</th>
         </tr>
 
@@ -27,7 +27,11 @@
                     <td>No</td>
                 {% endif %}
 
-                <td><a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code</a></td>
+                <td>
+                    <a href="{{ url_for('qr_code_page.qr_scan', location=i.uuid) }}" target="_blank">Location Link</a>
+                <br>
+                    <a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code Link</a>
+                </td>
 
                 <td>{{ i.points }}</td>
             </tr>
