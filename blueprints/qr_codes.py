@@ -5,7 +5,8 @@ from models.QrCodes import QrCodes
 locations_blueprint = Blueprint('qr_codes_page', __name__)
 
 QR_URL = "http://127.0.0.1/qr?url="
-SCAN_URL = "http://127.0.0.1/scan?qr_code="
+# SCAN_URL = "http://127.0.0.1/scan?qr_code="
+SCAN_URL = "https://timtamtime.pythonanywhere.com/scan?qr_code="
 
 
 @locations_blueprint.route('/qr_codes')

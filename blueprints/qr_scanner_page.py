@@ -19,20 +19,29 @@ def qr_scan():
         ##########################################################
         user = User.query.filter_by(username=session['username']).first()
 
-        if user.scanned_qr_codes is None:
-            qr_code_list = []
-            user.scanned_qr_codes = f"{qr_code.id},"
-        else:
-            qr_code_list = user.scanned_qr_codes.split(",")
-            user.scanned_qr_codes += f"{qr_code.id},"
+        # If qr code can only be scanned once (first 13 values (weeks) in the Qr code table can only be scanned once)
+        if qr_code.id < 14:
+            if user.scanned_qr_codes is None:
+                qr_code_list = []
+                user.scanned_qr_codes = f"{qr_code.id},"
+            else:
+                qr_code_list = user.scanned_qr_codes.split(",")
+                user.scanned_qr_codes += f"{qr_code.id},"
 
-        if str(qr_code.id) in qr_code_list:
-            return render_template('qr_scanner.html')
+            if not user.points:
+                user.points = qr_code.points
+            else:
+                user.points += qr_code.points
 
-        if not user.points:
-            user.points = qr_code.points
+            if str(qr_code.id) in qr_code_list:
+                return render_template('qr_scanner.html')
+
+        # If QR code is able to be scanned multiple times
         else:
-            user.points += qr_code.points
+            if not user.points:
+                user.points = qr_code.points
+            else:
+                user.points += qr_code.points
 
         db.session.commit()
         ##########################################################

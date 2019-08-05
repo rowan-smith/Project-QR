@@ -6,6 +6,7 @@ from models.User import User
 
 db.session.add_all([
     # Weeks 2-13 Codes
+    QrCodes(name='Week 1', uuid=uuid.uuid4().hex, points=5),
     QrCodes(name='Week 2', uuid=uuid.uuid4().hex, points=5),
     QrCodes(name='Week 3', uuid=uuid.uuid4().hex, points=5),
     QrCodes(name='Week 4', uuid=uuid.uuid4().hex, points=5),

@@ -43,21 +43,47 @@
 
 {#LEADER BOARD START#}
 <div>
-    <h1 class="center_horizontal">Points Leader Board</h1>
-    <table>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Points</th>
-        </tr>
-        {% for i in users %}
-            <tr>
-                <td>{{ i.username }}</td>
-                <td>{{ i.email }}</td>
-                <td>{{ i.points }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    {% if session['is_admin'] %}
+        <div>
+            <h1 class="center_horizontal">Points Leader Board</h1>
+            <table style="width: 90%">
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Points</th>
+                    <th>Scanned Weeks</th>
+                </tr>
+                {% for i in users %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.username }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.points }}</td>
+                        <td>{{ i.scanned_qr_codes }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div>
+            <h1 class="center_horizontal">Points Leader Board</h1>
+            <table style="width: 30%">
+                <tr>
+                    <th>Name</th>
+                    <th>Points</th>
+                    <th>Scanned Weeks</th>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.points }}</td>
+                        <td>{{ user.scanned_qr_codes }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
 </div>
 {#LEADER BOARD END#}
 

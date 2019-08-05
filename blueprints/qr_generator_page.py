@@ -10,7 +10,7 @@ def generate_qr_code():
 
         data = {
             'url': 'it.jcu.io',
-            'size': 60,
+            'size': 15,
             'colour': 'white',
             'image': 'default'
         }
