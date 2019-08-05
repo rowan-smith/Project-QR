@@ -22,14 +22,17 @@ def login():
         user = User.query.filter_by(username=request.form['username']).first()
 
         # TODO flash message if the two blocks below throw an error
+        #  instead of aborting
 
         # check if user exists
         if user is None:
+            print('User does not exist')
             abort(401)
 
         # Check if password is incorrect
         # TODO change from abort later
         if not user.check_password(request.form['password']):
+            print('password is incorrect')
             abort(401)
 
         # Logs in user

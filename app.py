@@ -19,7 +19,7 @@ QRcode(app)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
-# login_manager.login_view = "login_page.login"
+login_manager.login_view = "login_page.login"
 
 
 from blueprints.home import home_blueprint

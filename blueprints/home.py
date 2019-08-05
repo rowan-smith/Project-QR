@@ -1,5 +1,5 @@
 from flask_login import fresh_login_required
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, redirect
 from models.User import User
 
 home_blueprint = Blueprint('home_page', __name__)
