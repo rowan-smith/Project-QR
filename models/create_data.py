@@ -27,11 +27,14 @@ db.session.add_all([
     QrCodes(name='5 Bonus Points', uuid=uuid.uuid4().hex, points=5),
 ])
 
-db.session.add(User(uuid=str(uuid.uuid4()),
-                    name='admin',
-                    username='admin',
-                    email='admin@admin',
-                    password_hash=User.set_password('admin'),
-                    is_admin=True))
+u = User()
+u.name = 'admin'
+u.username = 'admin'
+u.email = 'admin@admin'
+u.uuid = str(uuid.uuid4())
+u.set_password('admin')
+u.is_admin = True
+
+db.session.add_all([u])
 
 db.session.commit()
