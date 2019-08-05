@@ -6,10 +6,9 @@ from app import db
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    # __table_args__ = {'extend_existing': True}
 
     # User admin information
-    uuid = db.Column(db.String(36), unique=True, primary_key=True)
+    id = db.Column(db.String(36), unique=True, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -26,6 +25,9 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_id(self):
+        return self.id
 
     def __repr__(self):
         return f'<User {self.username}>'

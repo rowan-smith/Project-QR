@@ -1,3 +1,5 @@
 flask>=1.0.3
 flask_sqlalchemy>=2.4.0
 flask-qrcode>=3.0.0
+flask-login>=0.4.1
+flask-wtf>=0.14.2

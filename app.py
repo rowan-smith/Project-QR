@@ -1,6 +1,7 @@
 import os
 
-from flask import Flask, session
+from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
 
@@ -13,13 +14,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'JIRN#@UNT#@(UTH@#(GN@#*'
 
 
-@app.before_request
-def make_session_permanent():
-    session.permanent = True
-
-
 db = SQLAlchemy(app)
 QRcode(app)
+login_manager = LoginManager(app)
+login_manager.init_app(app)
+login_manager.session_protection = "strong"
+login_manager.login_view = "login_page.login"
+
 
 from blueprints.home import home_blueprint
 from blueprints.index import index_blueprint
@@ -29,7 +30,6 @@ from blueprints.qr_generator_page import qr_gen_blueprint
 from blueprints.qr_scanner_page import qr_code_blueprint
 from blueprints.qr_codes import locations_blueprint
 from blueprints.logout import logout_blueprint
-from blueprints.admin import admin_blueprint
 from blueprints.user_points import points_blueprint
 
 db.create_all()
@@ -42,7 +42,6 @@ app.register_blueprint(qr_gen_blueprint)
 app.register_blueprint(qr_code_blueprint)
 app.register_blueprint(locations_blueprint)
 app.register_blueprint(logout_blueprint)
-app.register_blueprint(admin_blueprint)
 app.register_blueprint(points_blueprint)
 
 
