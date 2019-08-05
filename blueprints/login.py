@@ -42,14 +42,15 @@ def login():
         session['email'] = user.email
         session['points'] = user.points
 
+        # TODO Remove is_admin
+        if user.is_admin:
+            session['is_admin'] = True
+        else:
+            session['is_admin'] = False
+
         return redirect('home')
 
     return render_template('login_page.html', form=LoginForm())
-            if user.is_admin:
-                session['is_admin'] = True
-            else:
-                session['is_admin'] = False
-            ############################################################
 
 
 @login_manager.user_loader

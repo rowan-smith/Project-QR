@@ -5,25 +5,6 @@
     <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
 </head>
 <body>
-
-<form method="POST" class="center_vertical_horizontal">
-    <h3>Tim Tam Time QR-Code Login</h3>
-    {{ form.csrf_token }}
-    <p>
-        {{ form.username.label }}
-        {{ form.username(class="custom") }}
-    </p>
-    <p>
-        {{ form.password.label }}
-        {{ form.password }}
-    </p>
-    <p>
-        {{ form.remember_me }}
-        {{ form.remember_me.label }}
-    </p>
-    {{ form.login }}
-    <p>Not Registered? <a href="{{ url_for('register_page.register') }}">Create an account!</a></p>
-</form>
 {#TOPNAV START#}
 <div>
     {% if session['is_admin'] %}
@@ -64,27 +45,24 @@
 {#TOPNAV END#}
 
 {#LOGIN FORM START#}
-<div>
-    <form method="post" class="center_vertical_horizontal">
-        <h3>Tim Tam Time QR-Code Login</h3>
-        {% if error %}
-            <p class="error"><strong>Error:</strong> {{ error }}</p>
-        {% endif %}
-        Username<br>
-        <label>
-            <input type="text" name="user-username">
-        </label><br>
-
-        Password<br>
-        <label>
-            <input type="password" name="user-pass">
-        </label><br>
-
-        <input type="submit" value="Login"><br>
-
-        Not Registered? <a href="{{ url_for('register_page.register') }}">Create an account!</a>
-    </form>
-</div>
+<form method="POST" class="center_vertical_horizontal">
+    <h3>Tim Tam Time QR-Code Login</h3>
+    {{ form.csrf_token }}
+    <p>
+        {{ form.username.label }}
+        {{ form.username(class="custom") }}
+    </p>
+    <p>
+        {{ form.password.label }}
+        {{ form.password }}
+    </p>
+    <p>
+        {{ form.remember_me }}
+        {{ form.remember_me.label }}
+    </p>
+    {{ form.login }}
+    <p>Not Registered? <a href="{{ url_for('register_page.register') }}">Create an account!</a></p>
+</form>
 {#LOGIN FORM END#}
 
 </body>

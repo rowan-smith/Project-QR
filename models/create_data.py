@@ -21,11 +21,11 @@ db.session.add_all([
     QrCodes(name='Week 13', uuid=uuid.uuid4().hex, points=5),
 
     # Bonus Points
-    QrCodes(name='Pizza Bonus', id=uuid.uuid4().hex, points=1),
-    QrCodes(name='1 Bonus Point', id=uuid.uuid4().hex, points=1),
-    QrCodes(name='2 Bonus Points', id=uuid.uuid4().hex, points=2),
-    QrCodes(name='3 Bonus Points', id=uuid.uuid4().hex, points=3),
-    QrCodes(name='5 Bonus Points', id=uuid.uuid4().hex, points=5),
+    QrCodes(name='Pizza Bonus', uuid=uuid.uuid4().hex, points=1),
+    QrCodes(name='1 Bonus Point', uuid=uuid.uuid4().hex, points=1),
+    QrCodes(name='2 Bonus Points', uuid=uuid.uuid4().hex, points=2),
+    QrCodes(name='3 Bonus Points', uuid=uuid.uuid4().hex, points=3),
+    QrCodes(name='5 Bonus Points', uuid=uuid.uuid4().hex, points=5),
 ])
 
 u = User()

@@ -5,33 +5,6 @@
     <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
 </head>
 <body>
-
-<form method="post" class="center_vertical_horizontal">
-    <h3>Tim Tam Time QR-Code Register</h3>
-    {{ form.csrf_token }}
-    <p>
-        {{ form.name.label }}
-        {{ form.name }}
-    </p>
-    <p>
-        {{ form.username.label }}
-        {{ form.username }}
-    </p>
-    <p>
-        {{ form.email.label }}
-        {{ form.email }}
-    </p>
-    <p>
-        {{ form.password.label }}
-        {{ form.password }}
-    </p>
-    <p>
-        {{ form.remember_me }}
-        {{ form.remember_me.label }}
-    </p>
-    {{ form.register }}
-    <p>Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a></p>
-</form>
 {#TOPNAV START#}
 <div>
     {% if session['is_admin'] %}
@@ -75,34 +48,29 @@
 <div>
     <form method="post" class="center_vertical_horizontal">
         <h3>Tim Tam Time QR-Code Register</h3>
-
-        {% if error %}
-            <p class="error"><b>Error: {{ error }}</b></p>
-        {% endif %}
-
-        First & Last Name<span style="color: red">*</span><br>
-        <label>
-            <input type="text" name="user-name" required>
-        </label><br>
-
-        Username<span style="color: red">*</span><br>
-        <label>
-            <input type="text" name="user-username" required>
-        </label><br>
-
-        Email Address<span style="color: red">*</span><br>
-        <label>
-            <input type="text" name="user-email" required>
-        </label><br>
-
-        Password<span style="color: red">*</span><br>
-        <label>
-            <input type="password" name="user-pass" required>
-        </label><br>
-
-        <input type="submit" value="Sign Up"><br>
-
-        Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a>
+        {{ form.csrf_token }}
+        <p>
+            {{ form.name.label }}
+            {{ form.name }}
+        </p>
+        <p>
+            {{ form.username.label }}
+            {{ form.username }}
+        </p>
+        <p>
+            {{ form.email.label }}
+            {{ form.email }}
+        </p>
+        <p>
+            {{ form.password.label }}
+            {{ form.password }}
+        </p>
+        <p>
+            {{ form.remember_me }}
+            {{ form.remember_me.label }}
+        </p>
+        {{ form.register }}
+        <p>Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a></p>
     </form>
 </div>
 {#REGISTER FORM END#}
