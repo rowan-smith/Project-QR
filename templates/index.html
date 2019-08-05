@@ -6,7 +6,50 @@
 </head>
 <body>
 
-<h1>Index Page - All site links</h1>
+{#TOPNAV START#}
+<div>
+    {% if session['is_admin'] %}
+        <div class="topnav">
+            <div class="topnavuser">
+                <p><span style="color: #fff">Logged in as</span></p>
+                {% if session['points'] is none %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
+                {% else %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
+                    </p>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('home_page.home') }}">Home</a>
+            <a href="{{ url_for('login_page.login') }}">Login</a>
+            <a href="{{ url_for('register_page.register') }}">Register</a>
+            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
+            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
+            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
+            <a href="{{ url_for('logout_page.logout') }}">Logout</a>
+        </div>
+    {% else %}
+        <div class="topnav">
+            <div class="topnavuser">
+                <p><span style="color: #fff">Logged in as:</span></p>
+                {% if session['points'] is none %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
+                {% else %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
+                    </p>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('login_page.login') }}">Login</a>
+            <a href="{{ url_for('register_page.register') }}">Register</a>
+        </div>
+    {% endif %}
+</div>
+{#TOPNAV END#}
 
+{#INDEX PAGE CONTENT#}
+<div>
+    <h2>Welcome To Tim Tam Time QR</h2>
+    <br>
+    <img src="../static/Tim_Tams.jpg" alt="Tim Tams" style="max-width: 50%" class="center_vertical_horizontal">
+</div>
 </body>
 </html>

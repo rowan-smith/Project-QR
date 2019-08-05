@@ -6,15 +6,66 @@
 </head>
 <body>
 
-<h1 class="center_horizontal">Logged in as <span style="color: #4CAF50">{{ session['name'] }}</span></h1>
+{#TOPNAV START#}
+<div>
+    {% if session['is_admin'] %}
+        <div class="topnav">
+            <div class="topnavuser">
+                <p><span style="color: #fff">Logged in as:</span></p>
+                {% if session['points'] is none %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
+                {% else %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
+                    </p>
+                {% endif %}
+            </div>
+            <a class="active" href="{{ url_for('home_page.home') }}">Home</a>
+            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
+            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
+            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
+        </div>
+    {% else %}
+        <div class="topnav">
+            <div class="topnavuser">
+                <p><span style="color: #fff">Logged in as:</span></p>
+                {% if session['points'] is none %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
+                {% else %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
+                    </p>
+                {% endif %}
+            </div>
+            <a class="active" href="{{ url_for('home_page.home') }}">Home</a>
+        </div>
+    {% endif %}
+</div>
+{#TOPNAV END#}
 
-{% if session['points'] is none %}
-    <h1 class="center_horizontal">Points: <span style="color: #4CAF50; ">0</span></h1>
-{% else %}
-    <h1 class="center_horizontal">Points:<span style="color: #4CAF50">{{ session['points'] }} </span></h1>
-{% endif %}
+{#LEADER BOARD START#}
+<div>
+    <h1 class="center_horizontal">Points Leader Board</h1>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Points</th>
+        </tr>
+        {% for i in users %}
+            <tr>
+                <td>{{ i.username }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.points }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{#LEADER BOARD END#}
 
-<button type="button" onclick="window.location.href = '/logout';" class="center_vertical_horizontal">Logout</button>
+{#LOGOUT BUTTON#}
+<br>
+<div style="text-align: center">
+    <button type="button" onclick="window.location.href = '/logout'">Logout</button>
+</div>
 
 </body>
 </html>

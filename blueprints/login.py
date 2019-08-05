@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request, url_for
+from flask import Blueprint, render_template, session, request, url_for, redirect
 
 from models.User import User
 
@@ -35,7 +35,6 @@ def login():
                 session['is_admin'] = True
             else:
                 session['is_admin'] = False
-
             ############################################################
 
             return render_template('home.html', session=session)

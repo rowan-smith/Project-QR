@@ -6,37 +6,80 @@
 </head>
 <body>
 
-<form method="post" class="center_vertical_horizontal">
-    <h3>Tim Tam Time QR-Code Register</h3>
-
-    {% if error %}
-        <p class="error"><b>Error: {{ error }}</b></p>
+{#TOPNAV START#}
+<div>
+    {% if session['is_admin'] %}
+        <div class="topnav">
+            <div class="topnavuser">
+                <p><span style="color: #fff">Logged in as:</span></p>
+                {% if session['points'] is none %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
+                {% else %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
+                    </p>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('home_page.home') }}">Home</a>
+            <a href="{{ url_for('login_page.login') }}">Login</a>
+            <a class="active" href="{{ url_for('register_page.register') }}">Register</a>
+            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
+            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
+            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
+            <a href="{{ url_for('logout_page.logout') }}">Logout</a>
+        </div>
+    {% else %}
+        <div class="topnav">
+            <div class="topnavuser">
+                <p><span style="color: #fff">Logged in as:</span></p>
+                {% if session['points'] is none %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
+                {% else %}
+                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
+                    </p>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('login_page.login') }}">Login</a>
+            <a class="active" href="{{ url_for('register_page.register') }}">Register</a>
+        </div>
     {% endif %}
+</div>
+{#TOPNAV END#}
 
-    First & Last Name*<br>
-    <label>
-        <input type="text" name="user-name" required>
-    </label><br>
+{#REGISTER FORM START#}
+<div>
+    <form method="post" class="center_vertical_horizontal">
+        <h3>Tim Tam Time QR-Code Register</h3>
 
-    Username*<br>
-    <label>
-        <input type="text" name="user-username" required>
-    </label><br>
+        {% if error %}
+            <p class="error"><b>Error: {{ error }}</b></p>
+        {% endif %}
 
-    Email Address*<br>
-    <label>
-        <input type="text" name="user-email" required>
-    </label><br>
+        First & Last Name<span style="color: red">*</span><br>
+        <label>
+            <input type="text" name="user-name" required>
+        </label><br>
 
-    Password*<br>
-    <label>
-        <input type="password" name="user-pass" required>
-    </label><br>
+        Username<span style="color: red">*</span><br>
+        <label>
+            <input type="text" name="user-username" required>
+        </label><br>
 
-    <input type="submit" value="Sign Up"><br>
+        Email Address<span style="color: red">*</span><br>
+        <label>
+            <input type="text" name="user-email" required>
+        </label><br>
 
-    Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a>
-</form>
+        Password<span style="color: red">*</span><br>
+        <label>
+            <input type="password" name="user-pass" required>
+        </label><br>
+
+        <input type="submit" value="Sign Up"><br>
+
+        Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a>
+    </form>
+</div>
+{#REGISTER FORM END#}
 
 </body>
 </html>

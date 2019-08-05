@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, abort, url_for
 
 from models.QrCodes import QrCodes
 
-locations_blueprint = Blueprint('qr_codes', __name__)
+locations_blueprint = Blueprint('qr_codes_page', __name__)
 
 QR_URL = "http://127.0.0.1/qr?url="
 SCAN_URL = "http://127.0.0.1/scan?qr_code="
