@@ -1,3 +1,7 @@
+from flask import Blueprint, render_template, session, request, redirect, abort
+from flask_login import login_user
+from app import app, login_manager
+from forms.LoginForm import LoginForm
 from flask import Blueprint, render_template, session, request, url_for, redirect
 
 from models.User import User
@@ -5,40 +9,49 @@ from models.User import User
 login_blueprint = Blueprint('login_page', __name__)
 
 
+@app.errorhandler(401)
+def page_not_found(e):
+    return redirect('login')
+
+
 @login_blueprint.route('/login', methods=['POST', 'GET'])
 def login():
+    if request.method == 'POST':
 
-    if 'username' not in session:
+        # Checks if user exists in database
+        user = User.query.filter_by(username=request.form['username']).first()
 
-        if request.method == 'POST':
+        # TODO flash message if the two blocks below throw an error
 
-            # Check if username is in database
-            user = User.query.filter_by(username=request.form['user-username']).first()
-            if user is None:
-                error = "The username or password was invalid!"
-                return render_template('login_page.html', error=error)
+        # check if user exists
+        if user is None:
+            abort(401)
 
-            # Check if password matches
-            if not user.check_password(request.form['user-pass']):
-                error = "The username or password was invalid!"
-                return render_template('login_page.html', error=error)
+        # Check if password is incorrect
+        # TODO change from abort later
+        if not user.check_password(request.form['password']):
+            abort(401)
 
-            ############################################################
-            # Initiate user login
-            # TODO CREATE SECURE SESSION HERE
-            # TODO CREATE PERMANENT SESSION COOKIE
-            session['username'] = request.form['user-username']
-            session['points'] = user.points
-            session['name'] = user.name
+        # Logs in user
+        # TODO check for remember me functionality.
+        login_user(user, remember=True)
 
+        # sets user session information for use in HTML later
+        session['name'] = user.name
+        session['username'] = user.username
+        session['email'] = user.email
+        session['points'] = user.points
+
+        return redirect('home')
+
+    return render_template('login_page.html', form=LoginForm())
             if user.is_admin:
                 session['is_admin'] = True
             else:
                 session['is_admin'] = False
             ############################################################
 
-            return render_template('home.html', session=session)
 
-        return render_template('login_page.html')
-
-    return render_template('home.html', session=session)
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)

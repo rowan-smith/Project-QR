@@ -1,10 +1,11 @@
 import uuid
 
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, request, session, redirect
+from flask_login import login_user
 
+from forms.RegistrationForm import RegistrationForm
 from models.User import User
 from app import db
-from flask import Markup
 
 register_blueprint = Blueprint('register_page', __name__)
 
@@ -12,32 +13,40 @@ register_blueprint = Blueprint('register_page', __name__)
 @register_blueprint.route('/register', methods=['POST', 'GET'])
 def register():
 
-    if 'username' not in session:
+    if request.method == 'POST':
 
-        if request.method == 'POST':
+        # TODO fix whatever is happening in the two block below.
+        #  Flash message when the two blocks happen, combine into one?
 
-            if User.query.filter_by(username=request.form['user-username']).first() is not None:
-                error = f"The username <b>{request.form['user-username']}</b> already exists. Please choose another!"
-                return render_template('register_page.html', error=Markup(error))
+        # Check if username already exists in database
+        if User.query.filter_by(username=request.form['username']).first() is not None:
+            return render_template('register_page.html', form=RegistrationForm())
 
-            if User.query.filter_by(email=request.form['user-email']).first() is not None:
-                error = f"The email <b>{request.form['user-email']}</b> already exists. Please choose another!"
-                return render_template('register_page.html', error=Markup(error))
+        # Check if email already exists in database
+        if User.query.filter_by(email=request.form['email']).first() is not None:
+            return render_template('register_page.html', form=RegistrationForm())
 
-            db.session.add(User(uuid=str(uuid.uuid4()),
-                                name=request.form['user-name'],
-                                username=request.form['user-username'],
-                                email=request.form['user-email'],
-                                password_hash=User.set_password(request.form['user-pass'])))
-            db.session.commit()
+        # User register creation
+        user = User()
+        user.id = str(uuid.uuid4())
+        user.name = request.form['name']
+        user.username = request.form['username']
+        user.email = request.form['email']
+        user.password_hash = User.set_password(request.form['password'])
 
-            session['username'] = request.form['user-username']
-            session['points'] = None
-            session['name'] = request.form['user-name']
-            session['is_admin'] = False
+        # Add user to SQLAlchemy
+        db.session.add(user)
+        db.session.commit()
 
-            return render_template('home.html', session=session)
+        # Add user info to session for use later in HTML
+        session['username'] = user.username
+        session['points'] = user.points
+        session['name'] = user.name
+        session['email'] = user.email
 
-        return render_template('register_page.html')
+        # TODO check for remember me functionality.
+        login_user(user, remember=True)
 
-    return render_template('home.html', session=session)
+        return redirect('home')
+
+    return render_template('register_page.html', form=RegistrationForm())

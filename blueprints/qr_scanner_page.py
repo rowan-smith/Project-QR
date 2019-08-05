@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, session, abort, redirect
+from flask_login import fresh_login_required
 
 from models.User import User
 from models.QrCodes import QrCodes
@@ -8,16 +9,16 @@ qr_code_blueprint = Blueprint('qr_code_scan_page', __name__)
 
 
 @qr_code_blueprint.route('/scan', methods=['GET'])
+@fresh_login_required
 def qr_scan():
-    if 'username' in session:
 
-        if len(request.values) == 0:
-            return render_template('qr_scanner.html')
+    if len(request.values) == 0:
+        return render_template('qr_scanner.html')
 
-        qr_code = QrCodes.query.filter_by(uuid=request.values['qr_code']).first()
+    qr_code = QrCodes.query.filter_by(uuid=request.values['qr_code']).first()
 
-        ##########################################################
-        user = User.query.filter_by(username=session['username']).first()
+    ##########################################################
+    user = User.query.filter_by(username=session['username']).first()
 
         # If qr code can only be scanned once (first 13 values (weeks) in the Qr code table can only be scanned once)
         if qr_code.id < 14:
@@ -43,11 +44,10 @@ def qr_scan():
             else:
                 user.points += qr_code.points
 
-        db.session.commit()
-        ##########################################################
+    db.session.commit()
+    ##########################################################
 
-        if not qr_code:
-            return render_template('qr_scanner.html')
+    if not qr_code:
+        return render_template('qr_scanner.html')
 
-        return render_template('qr_scanner.html', qr_code=qr_code)
-    return redirect('login')
+    return render_template('qr_scanner.html', qr_code=qr_code)

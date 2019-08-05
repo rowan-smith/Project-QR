@@ -21,18 +21,21 @@ db.session.add_all([
     QrCodes(name='Week 13', uuid=uuid.uuid4().hex, points=5),
 
     # Bonus Points
-    QrCodes(name='Pizza Bonus', uuid=uuid.uuid4().hex, points=1),
-    QrCodes(name='1 Bonus Point', uuid=uuid.uuid4().hex, points=1),
-    QrCodes(name='2 Bonus Points', uuid=uuid.uuid4().hex, points=2),
-    QrCodes(name='3 Bonus Points', uuid=uuid.uuid4().hex, points=3),
-    QrCodes(name='5 Bonus Points', uuid=uuid.uuid4().hex, points=5),
+    QrCodes(name='Pizza Bonus', id=uuid.uuid4().hex, points=1),
+    QrCodes(name='1 Bonus Point', id=uuid.uuid4().hex, points=1),
+    QrCodes(name='2 Bonus Points', id=uuid.uuid4().hex, points=2),
+    QrCodes(name='3 Bonus Points', id=uuid.uuid4().hex, points=3),
+    QrCodes(name='5 Bonus Points', id=uuid.uuid4().hex, points=5),
 ])
 
-db.session.add(User(uuid=str(uuid.uuid4()),
-                    name='admin',
-                    username='admin',
-                    email='admin@admin',
-                    password_hash=User.set_password('admin'),
-                    is_admin=True))
+u = User()
+u.name = 'admin'
+u.username = 'admin'
+u.email = 'admin@admin'
+u.id = str(uuid.uuid4())
+u.password_hash = u.set_password('admin')
+u.is_admin = True
+
+db.session.add_all([u])
 
 db.session.commit()
