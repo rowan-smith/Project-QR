@@ -1,4 +1,4 @@
-# TODO create a way to add and remove locations
+# TODO create a way to add and remove qrCodeScans
 
 # TODO Create counter for users to scan
 

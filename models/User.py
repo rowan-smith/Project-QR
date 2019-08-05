@@ -30,8 +30,8 @@ class User(db.Model):
     points = db.Column(db.Integer,
                        nullable=True)
 
-    visited_locations = db.Column(db.String(300),
-                                  nullable=True)
+    scanned_qr_codes = db.Column(db.String(300),
+                                 nullable=True)
 
     @staticmethod
     def set_password(password):

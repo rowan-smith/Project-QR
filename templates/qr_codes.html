@@ -8,27 +8,19 @@
 
 <h2>QR Code Locations</h2>
 
-{% if locations %}
+{% if qr_codes %}
     <table>
         <tr>
             <th>Location Name</th>
-            <th>Bonus</th>
             <th>Links</th>
             <th>Points</th>
         </tr>
 
-        {% for i in locations %}
+        {% for i in qr_codes %}
             <tr>
                 <td>{{ i.name }}</td>
-
-                {% if i.bonus %}
-                    <td>Yes</td>
-                {% else %}
-                    <td>No</td>
-                {% endif %}
-
                 <td>
-                    <a href="{{ url_for('qr_code_page.qr_scan', location=i.uuid) }}" target="_blank">Location Link</a>
+                    <a href="{{ url_for('qr_code_scan_page.qr_scan', qr_code=i.uuid) }}" target="_blank">Scan QR Code Link</a>
                 <br>
                     <a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code Link</a>
                 </td>

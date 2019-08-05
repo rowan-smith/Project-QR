@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request, session, abort, redirect
 
 from models.User import User
-from models.ScanLocation import ScanLocation
+from models.QrCodes import QrCodes
 from app import db
 
-qr_code_blueprint = Blueprint('qr_code_page', __name__)
+qr_code_blueprint = Blueprint('qr_code_scan_page', __name__)
 
 
 @qr_code_blueprint.route('/scan', methods=['GET'])
@@ -14,31 +14,31 @@ def qr_scan():
         if len(request.values) == 0:
             return render_template('qr_scanner.html')
 
-        location = ScanLocation.query.filter_by(uuid=request.values['location']).first()
+        qr_code = QrCodes.query.filter_by(uuid=request.values['qr_code']).first()
 
         ##########################################################
         user = User.query.filter_by(username=session['username']).first()
 
-        if user.visited_locations is None:
-            location_list = []
-            user.visited_locations = f"{location.id},"
+        if user.scanned_qr_codes is None:
+            qr_code_list = []
+            user.scanned_qr_codes = f"{qr_code.id},"
         else:
-            location_list = user.visited_locations.split(",")
-            user.visited_locations += f"{location.id},"
+            qr_code_list = user.scanned_qr_codes.split(",")
+            user.scanned_qr_codes += f"{qr_code.id},"
 
-        if str(location.id) in location_list:
+        if str(qr_code.id) in qr_code_list:
             return render_template('qr_scanner.html')
 
         if not user.points:
-            user.points = location.points
+            user.points = qr_code.points
         else:
-            user.points += location.points
+            user.points += qr_code.points
 
         db.session.commit()
         ##########################################################
 
-        if not location:
+        if not qr_code:
             return render_template('qr_scanner.html')
 
-        return render_template('qr_scanner.html', location=location)
+        return render_template('qr_scanner.html', qr_code=qr_code)
     return redirect('login')

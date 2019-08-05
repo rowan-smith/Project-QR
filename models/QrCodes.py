@@ -3,13 +3,12 @@ import uuid
 from app import db
 
 
-class ScanLocation(db.Model):
+class QrCodes(db.Model):
 
-    __tablename__ = 'locations'
+    __tablename__ = 'qr_codes'
 
     id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
-    bonus = db.Column(db.Boolean, nullable=True)
     uuid = db.Column(db.String(32))
 
     points = db.Column(db.Integer)
@@ -24,4 +23,4 @@ class ScanLocation(db.Model):
         return self.bonus
 
     def __repr__(self):
-        return f'<ScanLocation {self.name}>'
+        return f'<QrCodes {self.name}>'

@@ -32,7 +32,7 @@ def register():
             db.session.commit()
 
             session['username'] = request.form['user-username']
-            session['points'] = 0
+            session['points'] = None
             session['name'] = request.form['user-name']
             session['is_admin'] = False
 
