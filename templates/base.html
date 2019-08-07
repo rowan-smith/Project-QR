@@ -24,6 +24,7 @@
 {% block head %}
     {{ super() }}
     {{ fixes.ie8() }}
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.jpg') }}">
 {%- endblock %}
 
 {% block html_attribs %} lang="en"{% endblock %}

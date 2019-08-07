@@ -6,7 +6,7 @@
 
 {#GENERATE QR CODE#}
 {% if data['image'] == 'default' %}
-    <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img='logo.jpg', factor=3, back_color=data['colour'], fill_color='black') }}" alt="QR-Code">
+    <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img='favicon.jpg', factor=3, back_color=data['colour'], fill_color='black') }}" alt="QR-Code">
 {% elif data['image'] == 'none' %}
     <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', factor=3, back_color=data['colour'], fill_color='black') }}" alt="QR-Code">
 {% else %}
