@@ -1,6 +1,5 @@
 import os
 
-from dominate.tags import img
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
@@ -52,16 +51,15 @@ app.register_blueprint(logout_blueprint)
 
 @nav.navigation()
 def anonymous_nav():
-    return Navbar(img(src='/static/favicon.jpg', width="30", height="30"),
-                  View('Home', 'index_page.index'),
+    # img(src='/static/favicon.jpg', width="30", height="30")
+    return Navbar(View('Home', 'index_page.index'),
                   View('Login', 'login_page.login'),
                   View('Register', 'register_page.register'))
 
 
 @nav.navigation()
 def admin_nav():
-    return Navbar(None,
-                  View('Home', 'index_page.index'),
+    return Navbar(View('Home', 'index_page.index'),
                   View('Account', 'home_page.home'),
                   Subgroup('QR',
                            View('QR Codes', 'qr_codes_page.qr_codes'),
@@ -74,8 +72,7 @@ def admin_nav():
 
 @nav.navigation()
 def user_nav():
-    return Navbar(None,
-                  View('Home', 'index_page.index'),
+    return Navbar(View('Home', 'index_page.index'),
                   View('Account', 'home_page.home'),
                   View('Logout', 'logout_page.logout'))
 
