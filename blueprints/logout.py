@@ -5,7 +5,6 @@ logout_blueprint = Blueprint('logout_page', __name__)
 
 
 @logout_blueprint.route('/logout', methods=['POST', 'GET'])
-@login_required
 def logout():
     # Logs current user out
     logout_user()

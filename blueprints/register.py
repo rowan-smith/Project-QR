@@ -49,4 +49,4 @@ def register():
 
         return redirect('home')
 
-    return render_template('register_page.html', form=RegistrationForm())
+    return render_template('register_page.html')

@@ -30,7 +30,6 @@ from blueprints.qr_generator_page import qr_gen_blueprint
 from blueprints.qr_scanner_page import qr_code_blueprint
 from blueprints.qr_codes import locations_blueprint
 from blueprints.logout import logout_blueprint
-from blueprints.user_points import points_blueprint
 
 db.create_all()
 
@@ -42,7 +41,6 @@ app.register_blueprint(qr_gen_blueprint)
 app.register_blueprint(qr_code_blueprint)
 app.register_blueprint(locations_blueprint)
 app.register_blueprint(logout_blueprint)
-app.register_blueprint(points_blueprint)
 
 
 if __name__ == '__main__':

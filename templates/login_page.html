@@ -6,24 +6,6 @@
 </head>
 <body>
 
-<form method="POST" class="center_vertical_horizontal">
-    <h3>Tim Tam Time QR-Code Login</h3>
-    {{ form.csrf_token }}
-    <p>
-        {{ form.username.label }}
-        {{ form.username(class="custom") }}
-    </p>
-    <p>
-        {{ form.password.label }}
-        {{ form.password }}
-    </p>
-    <p>
-        {{ form.remember_me }}
-        {{ form.remember_me.label }}
-    </p>
-    {{ form.login }}
-    <p>Not Registered? <a href="{{ url_for('register_page.register') }}">Create an account!</a></p>
-</form>
 {#TOPNAV START#}
 <div>
     {% if session['is_admin'] %}
@@ -72,12 +54,12 @@
         {% endif %}
         Username<br>
         <label>
-            <input type="text" name="user-username">
+            <input type="text" name="username">
         </label><br>
 
         Password<br>
         <label>
-            <input type="password" name="user-pass">
+            <input type="password" name="password">
         </label><br>
 
         <input type="submit" value="Login"><br>

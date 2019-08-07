@@ -5,9 +5,8 @@ qr_gen_blueprint = Blueprint('qr_generator_page', __name__)
 
 
 @qr_gen_blueprint.route('/qr', methods=['GET'])
-def generate_qr_code():
 @fresh_login_required
-def qr_code():
+def generate_qr_code():
 
     data = {
         'url': 'it.jcu.io',
