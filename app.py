@@ -1,14 +1,13 @@
 import os
 
-from flask import Flask, render_template
+from dominate.tags import img
+from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_nav import Nav
+from flask_nav.elements import Navbar, View, Subgroup
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
-
-from flask_nav import Nav
-from flask_nav.elements import *
-from wtforms import Label
 
 DATABASE_NAME = "QR-Users.db"
 
@@ -18,12 +17,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.secret_key = os.urandom(24)
 app.secret_key = 'JIRN#@UNT#@(UTH@#(GN@#*'
 
+
 db = SQLAlchemy(app)
 QRcode(app)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
-login_manager.login_view = "login_page.login"
+# login_manager.login_view = "login_page.login"
 
 nav = Nav()
 nav.init_app(app)
@@ -52,7 +52,7 @@ app.register_blueprint(logout_blueprint)
 
 @nav.navigation()
 def anonymous_nav():
-    return Navbar(None,
+    return Navbar(img(src='/static/favicon.jpg', width="30", height="30"),
                   View('Home', 'index_page.index'),
                   View('Login', 'login_page.login'),
                   View('Register', 'register_page.register'))
@@ -78,11 +78,6 @@ def user_nav():
                   View('Home', 'index_page.index'),
                   View('Account', 'home_page.home'),
                   View('Logout', 'logout_page.logout'))
-
-
-@app.route('/test')
-def test():
-    return render_template('test.html')
 
 
 if __name__ == '__main__':
