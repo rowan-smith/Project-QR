@@ -1,3 +1,5 @@
+import uuid
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -18,6 +20,14 @@ class User(db.Model, UserMixin):
     # User game information
     points = db.Column(db.Integer, nullable=True)
     scanned_qr_codes = db.Column(db.String(300), nullable=True)
+
+    def __init__(self, name: str, username: str, email: str, password: str, is_admin: bool = False):
+        self.id = str(uuid.uuid4())
+        self.name = name
+        self.username = username
+        self.email = email
+        self.password_hash = self.set_password(password)
+        self.is_admin = is_admin
 
     @staticmethod
     def set_password(password):

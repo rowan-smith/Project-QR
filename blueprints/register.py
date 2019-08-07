@@ -1,8 +1,7 @@
-import uuid
-
 from flask import Blueprint, render_template, request, session, redirect
 from flask_login import login_user
 
+from forms.RegistrationForm import RegistrationForm
 from models.User import User
 from app import db
 
@@ -25,27 +24,22 @@ def register():
         if User.query.filter_by(email=request.form['email']).first() is not None:
             return render_template('register_page.html')
 
-        # User register creation
-        user = User()
-        user.id = str(uuid.uuid4())
-        user.name = request.form['name']
-        user.username = request.form['username']
-        user.email = request.form['email']
-        user.password_hash = User.set_password(request.form['password'])
-
-        # Add user to SQLAlchemy
-        db.session.add(user)
+        # User register creation and user add to SQLAlchemy
+        db.session.add(User(request.form['name'],
+                            request.form['username'],
+                            request.form['email'],
+                            request.form['password']))
         db.session.commit()
 
         # Add user info to session for use later in HTML
-        session['username'] = user.username
-        session['points'] = user.points
-        session['name'] = user.name
-        session['email'] = user.email
+        session['name'] = request.form['name']
+        session['username'] = request.form['username']
+        session['email'] = request.form['email']
+        session['points'] = None
 
         # TODO check for remember me functionality.
-        login_user(user, remember=True)
+        login_user(User.query.filter_by(name=session['name']).first(), remember=True)
 
         return redirect('home')
 
-    return render_template('register_page.html')
+    return render_template('register_page.html', form=RegistrationForm())

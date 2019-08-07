@@ -19,11 +19,11 @@
     {% endif %}
 {% endblock %}
 
-{% import "bootstrap/fixes.html" as fixes %}
+{#{% import "bootstrap/fixes.html" as fixes %}#}
 
 {% block head %}
     {{ super() }}
-    {{ fixes.ie8() }}
+{#    {{ fixes.ie8() }}#}
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.jpg') }}">
 {%- endblock %}
 
