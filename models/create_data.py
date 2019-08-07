@@ -6,36 +6,37 @@ from models.User import User
 
 db.session.add_all([
     # Weeks 2-13 Codes
-    QrCodes(name='Week 1', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 2', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 3', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 4', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 5', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 6', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 7', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 8', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 9', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 10', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 11', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 12', uuid=uuid.uuid4().hex, points=5),
-    QrCodes(name='Week 13', uuid=uuid.uuid4().hex, points=5),
+    QrCodes('Week 1', 5),
+    QrCodes('Week 2', 5),
+    QrCodes('Week 3', 5),
+    QrCodes('Week 4', 5),
+    QrCodes('Week 5', 5),
+    QrCodes('Week 6', 5),
+    QrCodes('Week 7', 5),
+    QrCodes('Week 8', 5),
+    QrCodes('Week 9', 5),
+    QrCodes('Week 10', 5),
+    QrCodes('Week 11', 5),
+    QrCodes('Week 12', 5),
+    QrCodes('Week 13', 5),
 
     # Bonus Points
-    QrCodes(name='Pizza Bonus', uuid=uuid.uuid4().hex, points=1),
-    QrCodes(name='1 Bonus Point', uuid=uuid.uuid4().hex, points=1),
-    QrCodes(name='2 Bonus Points', uuid=uuid.uuid4().hex, points=2),
-    QrCodes(name='3 Bonus Points', uuid=uuid.uuid4().hex, points=3),
-    QrCodes(name='5 Bonus Points', uuid=uuid.uuid4().hex, points=5),
+    QrCodes('Pizza Bonus', 1),
+    QrCodes('1 Bonus Point', 1),
+    QrCodes('2 Bonus Points', 2),
+    QrCodes('3 Bonus Points', 3),
+    QrCodes('5 Bonus Points', 5),
 ])
 
-u = User()
-u.name = 'admin'
-u.username = 'admin'
-u.email = 'admin@admin'
-u.id = str(uuid.uuid4())
-u.password_hash = u.set_password('admin')
-u.is_admin = True
+if not User.query.filter_by(name='admin').first():
+    u = User()
+    u.name = 'admin'
+    u.username = 'admin'
+    u.email = 'admin@admin'
+    u.id = str(uuid.uuid4())
+    u.password_hash = u.set_password('admin')
+    u.is_admin = True
 
-db.session.add_all([u])
+    db.session.add_all([u])
 
 db.session.commit()
