@@ -3,7 +3,6 @@ import uuid
 from flask import Blueprint, render_template, request, session, redirect
 from flask_login import login_user
 
-from forms.RegistrationForm import RegistrationForm
 from models.User import User
 from app import db
 
@@ -20,11 +19,11 @@ def register():
 
         # Check if username already exists in database
         if User.query.filter_by(username=request.form['username']).first() is not None:
-            return render_template('register_page.html', form=RegistrationForm())
+            return render_template('register_page.html')
 
         # Check if email already exists in database
         if User.query.filter_by(email=request.form['email']).first() is not None:
-            return render_template('register_page.html', form=RegistrationForm())
+            return render_template('register_page.html')
 
         # User register creation
         user = User()
