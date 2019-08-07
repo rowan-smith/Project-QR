@@ -1,79 +1,38 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Register</title>
-    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
-</head>
-<body>
-{#TOPNAV START#}
-<div>
-    {% if session['is_admin'] %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('home_page.home') }}">Home</a>
-            <a href="{{ url_for('login_page.login') }}">Login</a>
-            <a class="active" href="{{ url_for('register_page.register') }}">Register</a>
-            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
-            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
-            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
-            <a href="{{ url_for('logout_page.logout') }}">Logout</a>
-        </div>
-    {% else %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('login_page.login') }}">Login</a>
-            <a class="active" href="{{ url_for('register_page.register') }}">Register</a>
-        </div>
-    {% endif %}
-</div>
-{#TOPNAV END#}
+{%- extends "base.html" %}
 
-{#REGISTER FORM START#}
-<div>
-    <form method="post" class="center_vertical_horizontal">
-        <h3>Tim Tam Time QR-Code Register</h3>
-        {{ form.csrf_token }}
-        <p>
-            {{ form.name.label }}
-            {{ form.name }}
-        </p>
-        <p>
-            {{ form.username.label }}
-            {{ form.username }}
-        </p>
-        <p>
-            {{ form.email.label }}
-            {{ form.email }}
-        </p>
-        <p>
-            {{ form.password.label }}
-            {{ form.password }}
-        </p>
-        <p>
-            {{ form.remember_me }}
-            {{ form.remember_me.label }}
-        </p>
-        {{ form.register }}
-        <p>Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a></p>
-    </form>
-</div>
-{#REGISTER FORM END#}
+{% block title %}Register{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+    {#REGISTER FORM START#}
+    <div>
+        <form method="post" class="center_vertical_horizontal">
+            <h3>Tim Tam Time QR-Code Register</h3>
+            {{ form.csrf_token }}
+            <p>
+                {{ form.name.label }}
+                {{ form.name }}
+            </p>
+            <p>
+                {{ form.username.label }}
+                {{ form.username }}
+            </p>
+            <p>
+                {{ form.email.label }}
+                {{ form.email }}
+            </p>
+            <p>
+                {{ form.password.label }}
+                {{ form.password }}
+            </p>
+            <p>
+                {{ form.remember_me }}
+                {{ form.remember_me.label }}
+            </p>
+            {{ form.register }}
+            <p>Already Registered? <a href="{{ url_for('login_page.login') }}">Login!</a></p>
+        </form>
+    </div>
+    {#REGISTER FORM END#}
+
+{%- endblock %}

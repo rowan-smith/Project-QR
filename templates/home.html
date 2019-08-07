@@ -1,97 +1,53 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Home</title>
-    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
-</head>
-<body>
+{%- extends "base.html" %}
 
-{#TOPNAV START#}
-<div>
-    {% if session['is_admin'] %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a class="active" href="{{ url_for('home_page.home') }}">Home</a>
-            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
-            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
-            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
-        </div>
-    {% else %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a class="active" href="{{ url_for('home_page.home') }}">Home</a>
-        </div>
-    {% endif %}
-</div>
-{#TOPNAV END#}
+{% block title %}Account{% endblock %}
 
-{#LEADER BOARD START#}
-<div>
-    {% if session['is_admin'] %}
-        <div>
-            <h1 class="center_horizontal">Points Leader Board</h1>
-            <table style="width: 90%">
-                <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Points</th>
-                    <th>Scanned Weeks</th>
-                </tr>
-                {% for i in users %}
+{% block content %}
+
+    {#LEADER BOARD START#}
+    <div>
+        {% if session['is_admin'] %}
+            <div>
+                <h1 class="center_horizontal">Points Leader Board</h1>
+                <table style="width: 90%">
                     <tr>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.username }}</td>
-                        <td>{{ i.email }}</td>
-                        <td>{{ i.points }}</td>
-                        <td>{{ i.scanned_qr_codes }}</td>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Points</th>
+                        <th>Scanned Weeks</th>
                     </tr>
-                {% endfor %}
-            </table>
-        </div>
-    {% else %}
-        <div>
-            <h1 class="center_horizontal">Points Leader Board</h1>
-            <table style="width: 30%">
-                <tr>
-                    <th>Name</th>
-                    <th>Points</th>
-                    <th>Scanned Weeks</th>
-                </tr>
-                {% for user in users %}
+                    {% for i in users %}
+                        <tr>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.username }}</td>
+                            <td>{{ i.email }}</td>
+                            <td>{{ i.points }}</td>
+                            <td>{{ i.scanned_qr_codes }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            <div>
+                <h1 class="center_horizontal">Points Leader Board</h1>
+                <table style="width: 30%">
                     <tr>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.points }}</td>
-                        <td>{{ user.scanned_qr_codes }}</td>
+                        <th>Name</th>
+                        <th>Points</th>
+                        <th>Scanned Weeks</th>
                     </tr>
-                {% endfor %}
-            </table>
-        </div>
-    {% endif %}
-</div>
-{#LEADER BOARD END#}
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.points }}</td>
+                            <td>{{ user.scanned_qr_codes }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+    </div>
+    {#LEADER BOARD END#}
 
-{#LOGOUT BUTTON#}
-<br>
-<div style="text-align: center">
-    <button type="button" onclick="window.location.href = '/logout'">Logout</button>
-</div>
-
-</body>
-</html>
+{%- endblock %}

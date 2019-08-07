@@ -1,48 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>QR Generator</title>
-    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
-</head>
-<body>
+{%- extends "base.html" %}
 
-{#TOPNAV START#}
-<div>
-    {% if session['is_admin'] %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('home_page.home') }}">Home</a>
-            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
-            <a class="active" href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
-            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
-        </div>
-    {% else %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('home_page.home') }}">Home</a>
-            <a href="{{ url_for('login_page.login') }}">Login</a>
-            <a href="{{ url_for('register_page.register') }}">Register</a>
-            <a href="{{ url_for('logout_page.logout') }}">Logout</a>
-        </div>
-    {% endif %}
-</div>
-{#TOPNAV END#}
+{% block title %}QR Generator{% endblock %}
+
+{% block content %}
 
 {#GENERATE QR CODE#}
 {% if data['image'] == 'default' %}
@@ -53,5 +13,4 @@
     <img src="{{ qrcode(data['url'], box_size=data['size'], error_correction='H', icon_img=data['image'], factor=3, back_color=data['colour'], fill_color='black') }}" alt="QR-Code">
 {% endif %}
 
-</body>
-</html>
+{%- endblock %}

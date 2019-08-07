@@ -1,48 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Login</title>
-    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
-</head>
-<body>
-{#TOPNAV START#}
-<div>
-    {% if session['is_admin'] %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('home_page.home') }}">Home</a>
-            <a class="active" href="{{ url_for('login_page.login') }}">Login</a>
-            <a href="{{ url_for('register_page.register') }}">Register</a>
-            <a href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
-            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
-            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
-            <a href="{{ url_for('logout_page.logout') }}">Logout</a>
-        </div>
-    {% else %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a class="active" href="{{ url_for('login_page.login') }}">Login</a>
-            <a href="{{ url_for('register_page.register') }}">Register</a>
-        </div>
-    {% endif %}
-</div>
-{#TOPNAV END#}
+{%- extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
 
 {#LOGIN FORM START#}
 <form method="POST" class="center_vertical_horizontal">
@@ -65,5 +25,4 @@
 </form>
 {#LOGIN FORM END#}
 
-</body>
-</html>
+{%- endblock %}

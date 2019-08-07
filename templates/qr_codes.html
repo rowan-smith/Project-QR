@@ -1,76 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>QR Codes</title>
-    <link href="{{ url_for('static', filename='site_styles.css') }}" rel="stylesheet">
-</head>
-<body>
+{%- extends "base.html" %}
 
-{#TOPNAV START#}
-<div>
-    {% if session['is_admin'] %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('home_page.home') }}">Home</a>
-            <a class="active" href="{{ url_for('qr_codes_page.qr_codes') }}">Qr Codes</a>
-            <a href="{{ url_for('qr_generator_page.generate_qr_code') }}">QR Generator</a>
-            <a href="{{ url_for('qr_code_scan_page.qr_scan') }}">QR Scanner</a>
-        </div>
-    {% else %}
-        <div class="topnav">
-            <div class="topnavuser">
-                <p><span style="color: #fff">Logged in as:</span></p>
-                {% if session['points'] is none %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - 0 Points</span></p>
-                {% else %}
-                    <p><span style="color: #4CAF50; font-weight: bold">{{ session['name'] }} - {{ session['points'] }} Points</span>
-                    </p>
-                {% endif %}
-            </div>
-            <a href="{{ url_for('home_page.home') }}">Home</a>
-            <a href="{{ url_for('login_page.login') }}">Login</a>
-            <a href="{{ url_for('register_page.register') }}">Register</a>
-            <a href="{{ url_for('logout_page.logout') }}">Logout</a>
-        </div>
-    {% endif %}
-</div>
-{#TOPNAV END#}
+{% block title %}QR Codes{% endblock %}
 
-{#QR CODES START#}
-<div>
-    <h2>QR Codes</h2>
-    {% if qr_codes %}
-        <table>
-            <tr>
-                <th>Location Name</th>
-                <th>Links</th>
-                <th>Points</th>
-            </tr>
-            {% for i in qr_codes %}
+{% block content %}
+
+    {#QR CODES START#}
+    <div>
+        <h2>QR Codes</h2>
+        {% if qr_codes %}
+            <table>
                 <tr>
-                    <td>{{ i.name }}</td>
-                    <td>
-                        <a href="{{ url_for('qr_code_scan_page.qr_scan', qr_code=i.uuid) }}" target="_blank">Scan QR
-                            Code Link</a>
-                        <br>
-                        <a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code Link</a>
-                    </td>
-                    <td>{{ i.points }}</td>
+                    <th>Location Name</th>
+                    <th>Links</th>
+                    <th>Points</th>
                 </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>No QR Codes Available</p>
-    {% endif %}
-</div>
-{#QR CODES END#}
-</body>
-</html>
+                {% for i in qr_codes %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>
+                            <a href="{{ url_for('qr_code_scan_page.qr_scan', qr_code=i.uuid) }}" target="_blank">Scan QR
+                                Code Link</a>
+                            <br>
+                            <a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code Link</a>
+                        </td>
+                        <td>{{ i.points }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No QR Codes Available</p>
+        {% endif %}
+    </div>
+    {#QR CODES END#}
+
+{%- endblock %}

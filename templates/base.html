@@ -1,0 +1,27 @@
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}Base Class{% endblock %}
+
+{% block styles -%}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site_styles.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if 'name' in session %}
+        {% if session['is_admin'] %}
+            {{ nav.admin_nav.render() }}
+        {% else %}
+            {{ nav.user_nav.render() }}
+        {% endif %}
+    {% else %}
+        {{ nav.anonymous_nav.render() }}
+    {% endif %}
+{% endblock %}
+
+{% import "bootstrap/fixes.html" as fixes %}
+
+{% block head %}
+    {{ super() }}
+    {{ fixes.ie8() }}
+{%- endblock %}
