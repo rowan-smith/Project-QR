@@ -13,6 +13,11 @@ class QrCodes(db.Model):
 
     points = db.Column(db.Integer)
 
+    def __init__(self, name, points):
+        self.name = name
+        self.uuid = uuid.uuid4().hex
+        self.points = points
+
     def get_location_hash(self):
         return self.unique_hash
 
