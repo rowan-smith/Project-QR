@@ -5,16 +5,10 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
 
-from instance.DevelopmentConfig import DevelopmentConfig
-from instance.ProductionConfig import ProductionConfig
-
-DATABASE_NAME = "QR-Users.db"
+from config import ProductionConfig, DevelopmentConfig
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DATABASE_NAME}'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.secret_key = os.urandom(24)
-app.secret_key = 'JIRN#@UNT#@(UTH@#(GN@#*'
 
 db = SQLAlchemy(app)
 QRcode(app)
