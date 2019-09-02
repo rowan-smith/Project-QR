@@ -1,0 +1,17 @@
+{% macro nav_link(endpoint, text) %}
+    {% if not request.endpoint %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for(endpoint) }}">{{ text }}</a></li>
+    {% elif request.endpoint.endswith(endpoint) %}
+        <li class="nav-item active"><a class="nav-link" href="{{ url_for(endpoint) }}">{{ text }}</a></li>
+    {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for(endpoint) }}">{{ text }}</a></li>
+    {% endif %}
+{% endmacro %}
+
+{% macro nav_logo(endpoint, image_url, alt) %}
+    <a class="navbar-brand" href="{{ url_for(endpoint) }}"><img src="{{ image_url }}" alt="{{ alt }}"></a>
+{% endmacro %}
+
+{% macro dropdown_item(endpoint, text) %}
+    <a class="dropdown-item" href="{{ url_for(endpoint) }}">{{ text }}</a>
+{% endmacro %}

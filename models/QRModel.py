@@ -3,7 +3,7 @@ import uuid
 from app import db
 
 
-class QrCodes(db.Model):
+class QRModel(db.Model):
 
     __tablename__ = 'qr_codes'
     id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)

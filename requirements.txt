@@ -3,4 +3,3 @@ flask_sqlalchemy>=2.4.0
 flask-qrcode>=3.0.0
 flask-login>=0.4.1
 flask-wtf>=0.14.2
-flask-bootstrap-4-alpha>=3.9.9

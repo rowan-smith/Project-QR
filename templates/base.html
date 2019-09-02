@@ -1,30 +1,112 @@
-{%- extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% from "macros/nav_macros.html" import nav_link with context %}
+{% from "macros/nav_macros.html" import dropdown_nav with context %}
+{% from "macros/nav_macros.html" import nav_logo with context %}
+{% from "macros/nav_macros.html" import dropdown_item with context %}
 
-{% block title %}Base Class{% endblock %}
+<head>
+    {% block head %}
+        <link rel="icon" type="image/png" href="../static/images/favicon.png">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../static/css/site_styles.css"/>
+        <title>{% block title %}{% endblock %}</title>
 
-{% block styles -%}
-    {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site_styles.css') }}">
-{% endblock %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
 
-{% block navbar %}
-    {% if 'name' in session %}
-        {% if session['is_admin'] %}
-            {{ nav.admin_nav.render() }}
-        {% else %}
-            {{ nav.user_nav.render() }}
-        {% endif %}
-    {% else %}
-        {{ nav.anonymous_nav.render() }}
-    {% endif %}
-{% endblock %}
+<body>
 
-{#{% import "bootstrap/fixes.html" as fixes %}#}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    {% block navbar %}
 
-{% block head %}
-    {{ super() }}
-{#    {{ fixes.ie8() }}#}
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.jpg') }}">
-{%- endblock %}
+        {# NAVIGATION LOGO #}
+        {{ nav_logo("index._index", "../static/images/favicon.png", "IT@JCU") }}
 
-{% block html_attribs %} lang="en"{% endblock %}
+        {# COLLAPSE NAVIGATION BUTTON #}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                {# NAVIGATION LINKS #}
+                {{ nav_link("index._index", "Home") }}
+                {{ nav_link("account._account", "Account") }}
+
+                {# QR DROPDOWN BOX #}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">QR</a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        {{ dropdown_item("qr._codes", "QR Codes") }}
+                        <div class="dropdown-divider"></div>
+                        {{ dropdown_item("qr._generator", "QR Generator") }}
+                        {{ dropdown_item("qr._scanner", "QR Scanner") }}
+                        {{ dropdown_item("qr._creator", "QR Creator") }}
+
+                    </div>
+                </li>
+
+                {# ADMIN DROPDOWN BOX #}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+{#                        {{ dropdown_item("#", "Admin List") }}#}
+                    </div>
+                </li>
+            </ul>
+
+            {# FIXME after accounts are connected fix points #}
+            {# USER POINTS #}
+            <div class="bg-dark p-2">
+                <span class="text-info">Rowan - 12 points</span>
+            </div>
+
+            {# LOGIN BUTTON #}
+            <a class="p-1" href="{{ url_for("auth._login") }}">
+                <button class="btn btn-outline-primary my-2 my-sm-0 p-2" type="submit">Login</button>
+            </a>
+
+            {# REGISTER BUTTON #}
+            <a class="p-1" href="{{ url_for("auth._register") }}">
+                <button class="btn btn-outline-success my-2 my-sm-0 p-2" type="submit">Register</button>
+            </a>
+
+            {# LOGOUT BUTTON #}
+            <a class="p-1" href="{{ url_for("auth._logout") }}">
+                <button class="btn btn-outline-danger my-2 my-sm-0 p-2" type="submit">Logout</button>
+            </a>
+        </div>
+    {% endblock %}
+</nav>
+
+<div id="test" class="container-fluid text-center">
+    {% block content %}{% endblock %}
+</div>
+
+<div>
+    {% block footer %}
+        {#        footer html here#}
+    {% endblock %}
+</div>
+
+</body>
+
+</html>

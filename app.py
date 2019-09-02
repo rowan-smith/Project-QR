@@ -1,12 +1,12 @@
 import os
 
-from flask import Flask
-from flask_bootstrap import Bootstrap
+from flask import Flask, render_template, request
 from flask_login import LoginManager
-from flask_nav import Nav
-from flask_nav.elements import Navbar, View, Subgroup
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
+
+from instance.DevelopmentConfig import DevelopmentConfig
+from instance.ProductionConfig import ProductionConfig
 
 DATABASE_NAME = "QR-Users.db"
 
@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.secret_key = os.urandom(24)
 app.secret_key = 'JIRN#@UNT#@(UTH@#(GN@#*'
 
-
 db = SQLAlchemy(app)
 QRcode(app)
 login_manager = LoginManager(app)
@@ -24,60 +23,57 @@ login_manager.init_app(app)
 login_manager.session_protection = "strong"
 # login_manager.login_view = "login_page.login"
 
-nav = Nav()
-nav.init_app(app)
-Bootstrap(app)
+# Load Database
+if os.environ['FLASK_ENV'] == 'production':
+    app.config.from_object(ProductionConfig())
+else:
+    app.config.from_object(DevelopmentConfig())
 
-from blueprints.home import home_blueprint
-from blueprints.index import index_blueprint
-from blueprints.login import login_blueprint
-from blueprints.register import register_blueprint
-from blueprints.qr_generator_page import qr_gen_blueprint
-from blueprints.qr_scanner_page import qr_code_blueprint
-from blueprints.qr_codes import locations_blueprint
-from blueprints.logout import logout_blueprint
+# Import all blueprints
+from views import *
 
+# Create Database
+from models import UserModel
 db.create_all()
+if not UserModel.query.filter_by(name='admin').first():
+    db.session.add_all([UserModel('admin', 'admin', 'admin@admin', 'admin', True)])
+db.session.commit()
 
-app.register_blueprint(home_blueprint)
-app.register_blueprint(index_blueprint)
-app.register_blueprint(login_blueprint)
-app.register_blueprint(register_blueprint)
-app.register_blueprint(qr_gen_blueprint)
-app.register_blueprint(qr_code_blueprint)
-app.register_blueprint(locations_blueprint)
-app.register_blueprint(logout_blueprint)
-
-
-@nav.navigation()
-def anonymous_nav():
-    # img(src='/static/favicon.jpg', width="30", height="30")
-    return Navbar('',
-                  View('Home', 'index_page.index'),
-                  View('Login', 'login_page.login'),
-                  View('Register', 'register_page.register'))
+# New Blueprints
+app.register_blueprint(index)
+app.register_blueprint(auth)
+app.register_blueprint(account)
+app.register_blueprint(qr)
 
 
-@nav.navigation()
-def admin_nav():
-    return Navbar('',
-                  View('Home', 'index_page.index'),
-                  View('Account', 'home_page.home'),
-                  Subgroup('QR',
-                           View('QR Codes', 'qr_codes_page.qr_codes'),
-                           View('QR Generator', 'qr_generator_page.generate_qr_code'),
-                           View('QR Scanner', 'qr_code_scan_page.qr_scan')),
-                  Subgroup('Admin',
-                           View('Admin List', 'home_page.home')),
-                  View('Logout', 'logout_page.logout'))
+# Error handle 404 (Page Not Found)
+@app.errorhandler(404)
+def page_not_found(error):
+    app.logger.error(f"Page not found: {request.path}")
+    return render_template("errors/404.html"), 404
 
+# Error handle 500 (Internal Server Error)
+@app.errorhandler(500)
+def internal_server_error(error):
+    app.logger.error(f"Server Error: {error}")
+    return render_template("errors/500.html"), 500
 
-@nav.navigation()
-def user_nav():
-    return Navbar(None,
-                  View('Home', 'index_page.index'),
-                  View('Account', 'home_page.home'),
-                  View('Logout', 'logout_page.logout'))
+# Error handle 401 (Unauthorized Access)
+@app.errorhandler(401)
+def unauthorized_access(error):
+    app.logger.error(f"Server Error: {error}")
+    return render_template("errors/401.html"), 401
+
+# Error handle all
+@app.errorhandler(Exception)
+def unhandled_exception(error):
+    app.logger.error(f"Unhandled Exception: {error}")
+    return render_template('errors/UnknownError.html')
+
+# Login Manager (Gets User Information)
+@login_manager.user_loader
+def load_user(user_id):
+    return UserModel.query.get(user_id)
 
 
 if __name__ == '__main__':
