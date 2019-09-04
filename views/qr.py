@@ -13,7 +13,10 @@ qr = Blueprint('qr', __name__)
 def _codes():
     QR_URL = "http://127.0.0.1"
     SCAN_URL = "https://timtamtime.pythonanywhere.com"
-    return render_template('QR/codes.html', qr_codes=QRModel.query.all(), scan_url=SCAN_URL, qr_url=QR_URL)
+
+    if session['is_admin']:
+        return render_template('QR/codes.html', qr_codes=QRModel.query.all(), scan_url=SCAN_URL, qr_url=QR_URL)
+    abort(404)
 
 
 @qr.route('/qr/generator')
@@ -42,7 +45,9 @@ def _generator():
             data['url'] = temp_data[i]
     del temp_data
 
-    return render_template('QR/generator.html', data=data)
+    if session["is_admin"]:
+        return render_template('QR/generator.html', data=data)
+    abort(404)
 
 
 @qr.route('/qr/scanner')
@@ -90,15 +95,17 @@ def _scanner():
 @login_required
 def _creator():
 
-    form = QRCreator()
-    if form.validate_on_submit():
+    if session["is_admin"]:
+        form = QRCreator()
+        if form.validate_on_submit():
 
-        # Check if QR already exists.
-        if QRModel.query.filter_by(name=form.code_name.data).first():
-            return render_template("QR/creator.html", form=form)
+            # Check if QR already exists.
+            if QRModel.query.filter_by(name=form.code_name.data).first():
+                return render_template("QR/creator.html", form=form)
 
-        db.session.add(QRModel(form.code_name.data, form.code_points.data))
-        db.session.commit()
-        return redirect(url_for('qr._codes'))
+            db.session.add(QRModel(form.code_name.data, form.code_points.data))
+            db.session.commit()
+            return redirect(url_for('qr._codes'))
 
-    return render_template("QR/creator.html", form=form)
+        return render_template("QR/creator.html", form=form)
+    abort(404)

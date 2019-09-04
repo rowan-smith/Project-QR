@@ -38,7 +38,30 @@ app.register_blueprint(index)
 app.register_blueprint(auth)
 app.register_blueprint(account)
 app.register_blueprint(qr)
-app.register_blueprint(errors)
+
+# Error handle 404 (Page Not Found)
+@app.errorhandler(404)
+def page_not_found(error):
+    app.logger.error(f"Page Not Found: {error}")
+    return render_template("errors/404.html"), 404
+
+# Error handle 500 (Internal Server Error)
+@app.errorhandler(500)
+def internal_server_error(error):
+    app.logger.error(f"Internal Server Error: {error}")
+    return render_template("errors/500.html"), 500
+
+# Error handle 401 (Unauthorized Access)
+@app.errorhandler(401)
+def unauthorized_access(error):
+    app.logger.error(f"Unauthorized Access: {error}")
+    return render_template("errors/401.html"), 401
+
+# Error handle all
+@app.errorhandler(Exception)
+def unhandled_exception(error):
+    app.logger.error(f"Unhandled Exception: {error}")
+    return render_template('errors/UnknownError.html')
 
 
 # Login Manager (Gets User Information)
