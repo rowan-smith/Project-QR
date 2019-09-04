@@ -11,17 +11,16 @@
             <table>
                 <tr>
                     <th>Location Name</th>
-                    <th>Links</th>
+                    <th>QR Codes</th>
                     <th>Points</th>
                 </tr>
                 {% for i in qr_codes %}
                     <tr>
                         <td>{{ i.name }}</td>
                         <td>
-                            <a href="{{ url_for('qr_code_scan_page.qr_scan', qr_code=i.uuid) }}" target="_blank">Scan QR
-                                Code Link</a>
-                            <br>
-                            <a href="{{ qr_url }}{{ scan_url }}{{ i.uuid }}" target="_blank">QR Code Link</a>
+                            <a href="{{ qr_url }}{{ url_for('qr._generator', code=i.uuid) }}" target="_blank">QR Code</a>
+                            <a> | </a>
+                            <a href="{{ url_for('qr._scanner', code=i.uuid) }}" target="_blank">Scanner Link</a>
                         </td>
                         <td>{{ i.points }}</td>
                     </tr>

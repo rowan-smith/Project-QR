@@ -22,7 +22,11 @@
                             <td>{{ i.name }}</td>
                             <td>{{ i.username }}</td>
                             <td>{{ i.email }}</td>
-                            <td>{{ i.points }}</td>
+                            {% if i.points %}
+                                <td>{{ i.points }}</td>
+                            {% else %}
+                                <td>0</td>
+                            {% endif %}
                             <td>{{ i.scanned_qr_codes }}</td>
                         </tr>
                     {% endfor %}
@@ -33,15 +37,19 @@
                 <h1 class="center_horizontal">Points Leader Board</h1>
                 <table style="width: 30%">
                     <tr>
-                        <th>Name</th>
+                        <th>Username</th>
                         <th>Points</th>
                         <th>Scanned Weeks</th>
                     </tr>
-                    {% for user in users %}
+                    {% for i in users %}
                         <tr>
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.points }}</td>
-                            <td>{{ user.scanned_qr_codes }}</td>
+                            <td>{{ i.username }}</td>
+                            {% if i.points %}
+                                <td>{{ i.points }}</td>
+                            {% else %}
+                                <td>0</td>
+                            {% endif %}
+                            <td>{{ i.scanned_qr_codes }}</td>
                         </tr>
                     {% endfor %}
                 </table>

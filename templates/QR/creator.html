@@ -4,8 +4,24 @@
 
 {% block content %}
 
-    <div>
-        <h1 class="alert-info">Coming Soon!</h1>
-    </div>
+    {#CREATOR FORM START#}
+    <form method="POST" class="text-center">
+
+        <h3>QR Code Creator</h3>
+
+        <div class="text-center center_vertical">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.code_name.label }}
+                {{ form.code_name }}
+            </p>
+            <p>
+                {{ form.code_points.label }}
+                {{ form.code_points }}
+            </p>
+            {{ form.create_code }}
+        </div>
+    </form>
+    {#CREATOR FORM END#}
 
 {%- endblock %}

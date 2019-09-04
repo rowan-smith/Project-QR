@@ -43,56 +43,72 @@
 
                 {# NAVIGATION LINKS #}
                 {{ nav_link("index._index", "Home") }}
-                {{ nav_link("account._account", "Account") }}
 
-                {# QR DROPDOWN BOX #}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">QR</a>
+                {% if 'username' in session %}
+                    {{ nav_link("account._account", "Account") }}
+                {% endif %}
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {# ADMIN NAV ITEMS #}
+                {% if session['is_admin'] %}
 
-                        {{ dropdown_item("qr._codes", "QR Codes") }}
-                        <div class="dropdown-divider"></div>
-                        {{ dropdown_item("qr._generator", "QR Generator") }}
-                        {{ dropdown_item("qr._scanner", "QR Scanner") }}
-                        {{ dropdown_item("qr._creator", "QR Creator") }}
+                    {# QR DROPDOWN BOX #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">QR</a>
 
-                    </div>
-                </li>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {{ dropdown_item("qr._codes", "QR Codes") }}
+                            <div class="dropdown-divider"></div>
+                            {{ dropdown_item("qr._generator", "QR Generator") }}
+                            {{ dropdown_item("qr._scanner", "QR Scanner") }}
+                            {{ dropdown_item("qr._creator", "QR Creator") }}
+                        </div>
+                    </li>
 
-                {# ADMIN DROPDOWN BOX #}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                    {# ADMIN DROPDOWN BOX #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-{#                        {{ dropdown_item("#", "Admin List") }}#}
-                    </div>
-                </li>
+                            {#                        {{ dropdown_item("#", "Admin List") }}#}
+                        </div>
+                    </li>
+                {% endif %}
             </ul>
 
             {# FIXME after accounts are connected fix points #}
             {# USER POINTS #}
             <div class="bg-dark p-2">
-                <span class="text-info">Rowan - 12 points</span>
+                {% if session['points'] %}
+                    <span class="text-info">{{ session['username'] }} - {{ session['points'] }} points</span>
+                {% else %}
+                    {% if 'username' in session %}
+                        <span class="text-info">{{ session['username'] }} - 0 points</span>
+                    {% else %}
+                        <span class="text-info"></span>
+                    {% endif %}
+                {% endif %}
             </div>
 
-            {# LOGIN BUTTON #}
-            <a class="p-1" href="{{ url_for("auth._login") }}">
-                <button class="btn btn-outline-primary my-2 my-sm-0 p-2" type="submit">Login</button>
-            </a>
+            {% if 'username' in session %}
+                {# LOGOUT BUTTON #}
+                <a class="p-1" href="{{ url_for("auth._logout") }}">
+                    <button class="btn btn-outline-danger my-2 my-sm-0 p-2" type="submit">Logout</button>
+                </a>
+            {% else %}
+                {# LOGIN BUTTON #}
+                <a class="p-1" href="{{ url_for("auth._login") }}">
+                    <button class="btn btn-outline-primary my-2 my-sm-0 p-2" type="submit">Login</button>
+                </a>
 
-            {# REGISTER BUTTON #}
-            <a class="p-1" href="{{ url_for("auth._register") }}">
-                <button class="btn btn-outline-success my-2 my-sm-0 p-2" type="submit">Register</button>
-            </a>
+                {# REGISTER BUTTON #}
+                <a class="p-1" href="{{ url_for("auth._register") }}">
+                    <button class="btn btn-outline-success my-2 my-sm-0 p-2" type="submit">Register</button>
+                </a>
+            {% endif %}
 
-            {# LOGOUT BUTTON #}
-            <a class="p-1" href="{{ url_for("auth._logout") }}">
-                <button class="btn btn-outline-danger my-2 my-sm-0 p-2" type="submit">Logout</button>
-            </a>
         </div>
     {% endblock %}
 </nav>
