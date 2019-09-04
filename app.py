@@ -18,10 +18,10 @@ login_manager.session_protection = "strong"
 # login_manager.login_view = "login_page.login"
 
 # Load Database
-if os.environ['FLASK_ENV'] == 'production':
-    app.config.from_object(ProductionConfig())
-else:
+if app.config['DEBUG']:
     app.config.from_object(DevelopmentConfig())
+else:
+    app.config.from_object(ProductionConfig())
 
 # Import all blueprints
 from views import *
@@ -83,4 +83,4 @@ def load_user(user_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=80)
+    app.run()
