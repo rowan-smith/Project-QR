@@ -4,58 +4,63 @@
 
 {% block content %}
 
-    {#LEADER BOARD START#}
-    <div>
-        {% if session['is_admin'] %}
-            <div>
-                <h1 class="center_horizontal">Points Leader Board</h1>
-                <table style="width: 90%">
+    <h1>Points Leader Board</h1>
+
+    <div class="table-responsive">
+        <table class="table">
+
+
+            {% if session["is_admin"] %}
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Scanned Weeks</th>
+                </tr>
+                </thead>
+
+                {% for i in users %}
                     <tr>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Points</th>
-                        <th>Scanned Weeks</th>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.username }}</td>
+                        <td>{{ i.email }}</td>
+
+                        {% if i.points %}
+                            <td>{{ i.points }}</td>
+                        {% else %}
+                            <td>0</td>
+                        {% endif %}
+
+                        <td>{{ i.scanned_qr_codes }}</td>
                     </tr>
-                    {% for i in users %}
-                        <tr>
-                            <td>{{ i.name }}</td>
-                            <td>{{ i.username }}</td>
-                            <td>{{ i.email }}</td>
-                            {% if i.points %}
-                                <td>{{ i.points }}</td>
-                            {% else %}
-                                <td>0</td>
-                            {% endif %}
-                            <td>{{ i.scanned_qr_codes }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        {% else %}
-            <div>
-                <h1 class="center_horizontal">Points Leader Board</h1>
-                <table style="width: 30%">
+                {% endfor %}
+
+            {% else %}
+                <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Scanned Weeks</th>
+                </tr>
+                </thead>
+
+                {% for i in users %}
                     <tr>
-                        <th>Username</th>
-                        <th>Points</th>
-                        <th>Scanned Weeks</th>
+                        <td>{{ i.username }}</td>
+
+                        {% if i.points %}
+                            <td>{{ i.points }}</td>
+                        {% else %}
+                            <td>0</td>
+                        {% endif %}
+
+                        <td>{{ i.scanned_qr_codes }}</td>
                     </tr>
-                    {% for i in users %}
-                        <tr>
-                            <td>{{ i.username }}</td>
-                            {% if i.points %}
-                                <td>{{ i.points }}</td>
-                            {% else %}
-                                <td>0</td>
-                            {% endif %}
-                            <td>{{ i.scanned_qr_codes }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        {% endif %}
+                {% endfor %}
+            {% endif %}
+        </table>
     </div>
-    {#LEADER BOARD END#}
 
 {%- endblock %}
