@@ -4,33 +4,42 @@
 
 {% block content %}
 
-{#    {% for item in form.errors.items() %}#}
-{#        <h1 class="alert-info">{{ item }}</h1>#}
-{#    {% endfor %}#}
+    {#    {% for item in form.errors.items() %}#}
+    {#        <h1 class="alert-info">{{ item }}</h1>#}
+    {#    {% endfor %}#}
 
-    {#LOGIN FORM START#}
-    <form method="POST" class="text-center">
+    {#    <div class="jumbotron d-flex align-items-center">#}
+    {#        <div class="container">#}
+    {#            <p>Centered Text</p>#}
+    {#        </div>#}
+    {#    </div>#}
 
-        <h3>Tim Tam Time QR-Code Login</h3>
+    <h3>Tim Tam Time QR-Code Login</h3>
 
-        <div class="text-center center_vertical">
-            {{ form.csrf_token }}
-            <p>
-                {{ form.username.label }}
-                {{ form.username }}
-            </p>
-            <p>
-                {{ form.password.label }}
-                {{ form.password }}
-            </p>
-            <p>
-                {{ form.remember_me }}
-                {{ form.remember_me.label }}
-            </p>
-            {{ form.login }}
+    <div class="jumbotron align-items-center d-flex justify-content-center align-middle h-auto">
+        <div class="container text-center">
+            <form method="POST">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {#                {{ form.username.label }}#}
+                    {{ form.username(class_="form-control", placeholder="Username") }}
+                </div>
+
+                <div class="form-group">
+                    {#                {{ form.password.label }}#}
+                    {{ form.password(class_="form-control", placeholder="Password") }}
+                </div>
+
+                <div class="form-check">
+                    {{ form.remember_me(class_="form-check-label") }}
+                    {{ form.remember_me.label }}
+                </div>
+
+                {{ form.login(class_="btn btn-primary") }}
+            </form>
+            <div class="dropdown-divider"></div>
             <p>Not Registered? <a href="{{ url_for('auth._register') }}">Create an account!</a></p>
         </div>
-    </form>
-    {#LOGIN FORM END#}
+    </div>
 
 {%- endblock %}
