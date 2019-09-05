@@ -82,14 +82,15 @@ def _register():
         session['username'] = form.username.raw_data
         session['email'] = form.username.raw_data
         session['points'] = None
+        session.permanent = True
 
         try:
             if request.form['remember_me'] == 'y':
-                login_user(UserModel.query.filter_by(name=session['name']).first(), True)
+                login_user(UserModel.query.filter_by(name=session['name']).first(), remember=True, fresh=True, duration=timedelta(days=90))
             else:
-                login_user(UserModel.query.filter_by(name=session['name']).first(), False)
+                login_user(UserModel.query.filter_by(name=session['name']).first(), remember=False, fresh=True, duration=timedelta(days=90))
         except KeyError:
-            login_user(UserModel.query.filter_by(name=session['name']).first(), False)
+            login_user(UserModel.query.filter_by(name=session['name']).first(), remember=False, fresh=True, duration=timedelta(days=90))
 
         # Log user in
         return redirect(url_for('account._account'))
