@@ -64,42 +64,6 @@
 /*    text-align: center;*/
 /*}*/
 
-/*table, th, td {*/
-/*    border: 1px solid #000;*/
-/*}*/
-
-/*table {*/
-/*    width: 90%;*/
-/*    border-collapse: collapse;*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-
-/*th {*/
-/*    background-color: #4CAF50;*/
-/*}*/
-
-/*th, td {*/
-/*    padding: 2px;*/
-/*    text-align: center;*/
-/*}*/
-
-/*tr {*/
-/*    background-color: #fff;*/
-/*}*/
-
-/*tr:hover {*/
-/*    background-color: #ff0;*/
-/*}*/
-
-/*tr:nth-child(even) {*/
-/*    background-color: #dcdcdc;*/
-/*}*/
-
-/*tr:nth-child(even):hover {*/
-/*    background-color: #ff0;*/
-/*}*/
-
 /*h1, h2, h3, h4 {*/
 /*    text-align: center;*/
 /*}*/
@@ -121,4 +85,8 @@
 .navbar-brand img {
     height: 2em;
     width: 4em;
+}
+
+.table-hover thead tr:hover th, .table-hover tbody tr:hover td {
+    background-color: #ff0;
 }

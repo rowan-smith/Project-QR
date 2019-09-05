@@ -4,18 +4,48 @@
 
 {% block content %}
 
-    {#QR CODES START#}
-    <div>
-        <h2>QR Codes</h2>
-        {% if qr_codes %}
-            <table>
-                <tr>
-                    <th>Location Name</th>
-                    <th>ID</th>
-                    <th>QR Codes</th>
-                    <th>Scanner Links</th>
-                    <th>Points</th>
+    <br>
+    <h2>QR Creator</h2>
+
+    <form method="POST" class="form-check-inline">
+        {{ form.csrf_token }}
+        <div class="form-row">
+
+            <div class="col-md-auto">
+                {{ form.code_name(class_="form-control", placeholder="Code Name") }}
+            </div>
+
+            <div class="col-md-auto">
+                {{ form.code_points(class_="form-control", placeholder="Code Points") }}
+            </div>
+
+            <div class="col-md-auto">
+                {{ form.create_code(class_="btn btn-success") }}
+            </div>
+        </div>
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+    <h2>QR Codes</h2>
+
+    {% if qr_codes %}
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                <tr class="bg-success">
+                    <th scope="col">Location Name</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">QR Codes</th>
+                    <th scope="col">Scanner Links</th>
+                    <th scope="col">Points</th>
                 </tr>
+                </thead>
+
+                <tbody>
                 {% for i in qr_codes %}
                     <tr>
                         <td>{{ i.name }}</td>
@@ -25,11 +55,12 @@
                         <td>{{ i.points }}</td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
-        {% else %}
-            <p>No QR Codes Available</p>
-        {% endif %}
-    </div>
-    {#QR CODES END#}
+        </div>
+
+    {% else %}
+        <p>No QR Codes Available</p>
+    {% endif %}
 
 {%- endblock %}

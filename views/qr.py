@@ -11,12 +11,23 @@ QR_URL = "http://127.0.0.1"
 SCAN_URL = "https://timtamtime.pythonanywhere.com"
 
 
-@qr.route('/qr/codes')
+@qr.route('/qr/codes', methods=['POST', 'GET'])
 @login_required
 def _codes():
 
-    if session['is_admin']:
-        return render_template('QR/codes.html', qr_codes=QRModel.query.all(), scan_url=SCAN_URL, qr_url=QR_URL)
+    if session["is_admin"]:
+        form = QRCreator()
+        if form.validate_on_submit():
+
+            # Check if QR already exists.
+            if QRModel.query.filter_by(name=form.code_name.data).first():
+                return render_template("QR/codes.html", qr_codes=QRModel.query.all(), form=form)
+
+            db.session.add(QRModel(form.code_name.data, form.code_points.data))
+            db.session.commit()
+            return redirect(url_for('qr._codes'))
+
+        return render_template('QR/codes.html', qr_codes=QRModel.query.all(), form=form)
     abort(404)
 
 
@@ -24,7 +35,7 @@ def _codes():
 @qr.route('/qr/generator/<string:content>/')
 @qr.route('/qr/generator/<string:content>/<int:size>')
 @login_required
-def _generator(*, content: str = SCAN_URL, size: int = 15, colour: str = 'white', image: str = 'favicon.jpg'):
+def _generator(*, content: str = SCAN_URL, size: int = 15, colour: str = 'white', image: str = 'images/IT@JCU Logo.jpg'):
 
     if session["is_admin"]:
         return render_template('QR/generator.html', url=f"{SCAN_URL}{url_for('qr._scanner')}?code={content}",
@@ -73,22 +84,3 @@ def _scanner():
     ##########################################################
 
     return render_template('QR/scanner.html', code=qr_code)
-
-
-@qr.route("/qr/creator", methods=['POST', 'GET'])
-@login_required
-def _creator():
-    if session["is_admin"]:
-        form = QRCreator()
-        if form.validate_on_submit():
-
-            # Check if QR already exists.
-            if QRModel.query.filter_by(name=form.code_name.data).first():
-                return render_template("QR/creator.html", form=form)
-
-            db.session.add(QRModel(form.code_name.data, form.code_points.data))
-            db.session.commit()
-            return redirect(url_for('qr._codes'))
-
-        return render_template("QR/creator.html", form=form)
-    abort(404)
