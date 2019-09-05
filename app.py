@@ -1,6 +1,4 @@
-import os
-
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
@@ -8,14 +6,13 @@ from flask_qrcode import QRcode
 from config import ProductionConfig, DevelopmentConfig
 
 app = Flask(__name__)
-# app.secret_key = os.urandom(24)
 
 db = SQLAlchemy(app)
 QRcode(app)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
-# login_manager.login_view = "login_page.login"
+# login_manager.login_view = "auth._login"
 
 # Load Database
 if app.config['DEBUG']:
@@ -29,9 +26,10 @@ from views import *
 # Create Database
 from models import UserModel
 db.create_all()
-if not UserModel.query.filter_by(name='admin').first():
+
+if db.session.query(UserModel).first() is None:
     db.session.add_all([UserModel('admin', 'admin', 'admin@admin', 'admin', True)])
-db.session.commit()
+    db.session.commit()
 
 # New Blueprints
 app.register_blueprint(index)
