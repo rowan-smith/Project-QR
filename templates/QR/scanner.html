@@ -7,15 +7,18 @@
     {#QR CODE VALIDATOR#}
     <div>
         {% if code %}
-            <div style="text-align: center">
+            <div>
                 <p>Congratulations! You found {{ code }}!</p>
             </div>
         {% else %}
-            <div style="text-align: center">
+            <div>
+                <br>
                 <p>You Have Already Scanned This QR Code!</p>
-                <iframe width="560" height="315" src="http://www.youtube.com/embed/dQw4w9WgXcQ"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
+                <br>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+                            allowfullscreen></iframe>
+                </div>
             </div>
         {% endif %}
     </div>
