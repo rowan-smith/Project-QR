@@ -42,7 +42,6 @@ app.register_blueprint(qr)
 # Error handle 404 (Page Not Found)
 @app.errorhandler(404)
 def page_not_found(error):
-    app.logger.error(f"Page Not Found: {error}")
     return render_template("errors/404.html"), 404
 
 # Error handle 500 (Internal Server Error)

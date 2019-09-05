@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="../static/css/site_styles.css"/>
         <title>{% block title %}{% endblock %}</title>
 
+        {# This makes the website responsive; all elemenets need to be responsive for this to work. #}
+        {#<meta name="viewport" content="width=device-width, initial-scale=1">#}
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous"></script>
@@ -66,15 +69,15 @@
                     </li>
 
                     {# ADMIN DROPDOWN BOX #}
-{#                    <li class="nav-item dropdown">#}
-{#                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-{#                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>#}
-{##}
-{#                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-{##}
-                            {#                        {{ dropdown_item("#", "Admin List") }}#}
-{#                        </div>#}
-{#                    </li>#}
+                    {#                    <li class="nav-item dropdown">#}
+                    {#                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
+                    {#                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>#}
+                    {##}
+                    {#                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+                    {##}
+                    {#                        {{ dropdown_item("#", "Admin List") }}#}
+                    {#                        </div>#}
+                    {#                    </li>#}
                 {% endif %}
             </ul>
 

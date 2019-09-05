@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, session, abort, redirect, url_for
+from flask import render_template, Blueprint, request, session, abort, redirect, url_for, escape
 from flask_login import login_required
 
 from app import db
@@ -7,46 +7,28 @@ from models import QRModel, UserModel
 
 qr = Blueprint('qr', __name__)
 
+QR_URL = "http://127.0.0.1"
+SCAN_URL = "https://timtamtime.pythonanywhere.com"
+
 
 @qr.route('/qr/codes')
 @login_required
 def _codes():
-    QR_URL = "http://127.0.0.1"
-    SCAN_URL = "https://timtamtime.pythonanywhere.com"
 
     if session['is_admin']:
         return render_template('QR/codes.html', qr_codes=QRModel.query.all(), scan_url=SCAN_URL, qr_url=QR_URL)
     abort(404)
 
 
-@qr.route('/qr/generator')
+@qr.route('/qr/generator/')
+@qr.route('/qr/generator/<string:content>/')
+@qr.route('/qr/generator/<string:content>/<int:size>')
 @login_required
-def _generator():
-    data = {
-        'url': 'it.jcu.io',
-        'size': 15,
-        'colour': 'white',
-        'image': 'default'
-    }
-
-    temp_data = dict(request.values)
-    for i in temp_data:
-
-        if str(i).lower() == 'image':
-            data['image'] = temp_data[i]
-
-        if str(i).lower() == 'size':
-            data['size'] = temp_data[i]
-
-        if str(i).lower() == 'colour' or str(i).lower() == 'color':
-            data['colour'] = temp_data[i]
-
-        if str(i).lower() == 'url':
-            data['url'] = temp_data[i]
-    del temp_data
+def _generator(*, content: str = SCAN_URL, size: int = 15, colour: str = 'white', image: str = 'favicon.jpg'):
 
     if session["is_admin"]:
-        return render_template('QR/generator.html', data=data)
+        return render_template('QR/generator.html', url=f"{SCAN_URL}{url_for('qr._scanner')}?code={content}",
+                               size=size, colour=colour, image=image)
     abort(404)
 
 
@@ -86,6 +68,8 @@ def _scanner():
             user.points += qr_code.points
 
     db.session.commit()
+
+    session['points'] = user.points
     ##########################################################
 
     return render_template('QR/scanner.html', code=qr_code)
@@ -94,7 +78,6 @@ def _scanner():
 @qr.route("/qr/creator", methods=['POST', 'GET'])
 @login_required
 def _creator():
-
     if session["is_admin"]:
         form = QRCreator()
         if form.validate_on_submit():

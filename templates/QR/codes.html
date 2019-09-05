@@ -20,10 +20,7 @@
                     <tr>
                         <td>{{ i.name }}</td>
                         <td>{{ i.uuid }}</td>
-                        <td>
-{#                            <a href="http://127.0.0.1/qr/generator?url=http://127.0.0.1/qr/scanner?code={{ i.uuid }}">Link</a>#}
-                            <a href="https://timtamtime.pythonanywhere.com/qr/generator?url=https://timtamtime.pythonanywhere.com/qr/scanner?code={{ i.uuid }}">Link</a>
-                        </td>
+                        <td><a href="{{ url_for('qr._generator') }}{{ i.uuid }}" target="_blank">Link</a></td>
                         <td><a href="{{ url_for('qr._scanner', code=i.uuid) }}" target="_blank">Scanner Link</a></td>
                         <td>{{ i.points }}</td>
                     </tr>
