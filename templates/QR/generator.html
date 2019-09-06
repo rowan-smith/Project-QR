@@ -14,6 +14,7 @@
             {{ form.code_content(class_="form-control", placeholder="QR Content") }}
             {{ form.code_size(class_="form-control", placeholder="Size") }}
             {{ form.code_color(class_="form-control", placeholder="Color") }}
+            {{ form.code_correction(class_="form-control", placeholder="Correction") }}
             {{ form.code_image(class_="form-control", placeholder="Image URL") }}
             <br>
             {{ form.generate_code(class_="btn btn-lg btn-success btn-block") }}
@@ -23,9 +24,8 @@
         <a href="{{ url_for("qr._generator") }}" class="btn btn-lg btn-success btn-block">Generate New Code?</a>
         <br>
         <img class="img-responsive img-fluid"
-             src="{{ qrcode(data["CONTENT"], box_size=data["SIZE"], error_correction='H', icon_img=data["IMAGE"], factor=3, back_color=data["COLOR"], fill_color='black') }}"
+             src="{{ qrcode(data["CONTENT"], box_size=data["SIZE"], error_correction=data["CORRECTION"], icon_img=data["IMAGE"], factor=3, back_color=data["COLOR"], fill_color='black') }}"
              alt="QR-Code">
-        <br>
         <br>
         <br>
     {% endif %}

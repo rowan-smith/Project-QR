@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, request, session, abort, redirect,
 from flask_login import login_required
 
 from app import db, app
-from forms import QRCreator, QRGenerator
+from forms import QRCreator, QRGenerator, QRScanner
 from models import QRModel, UserModel
 
 qr = Blueprint('qr', __name__)
@@ -11,7 +11,6 @@ qr = Blueprint('qr', __name__)
 @qr.route('/qr/codes/', methods=['POST', 'GET'])
 @login_required
 def _codes():
-
     if session["is_admin"]:
         form = QRCreator()
         if form.validate_on_submit():
@@ -36,10 +35,10 @@ def _generator(code_id: str = None):
     if code_id is None:
 
         if form.validate_on_submit():
-
             data = {'CONTENT': form.code_content.data,
                     'SIZE': int(form.code_size.data),
                     'COLOR': form.code_color.data,
+                    'CORRECTION': form.code_correction.data,
                     'IMAGE': form.code_image.data}
 
             return render_template("QR/generator.html", form=form, data=data)
@@ -49,14 +48,14 @@ def _generator(code_id: str = None):
     else:
         if session['is_admin']:
             if app.config['DEBUG']:
-                scan_url = f"http://127.0.0.1:{request.host}".split(":")[1] if\
-                    f"{request.host}".split(":")[1] != "80" else "http://127.0.0.1"
+                scan_url = f"http://127.0.0.1"
             else:
                 scan_url = "https://timtamtime.pythonanywhere.com"
 
             data = {'CONTENT': f"{scan_url}{url_for('qr._scanner')}{code_id}/",
                     'SIZE': 20,
                     'COLOR': 'white',
+                    'CORRECTION': 'H',
                     'IMAGE': 'images/IT@JCU Logo.jpg'}
 
             return render_template("QR/generator.html", data=data)
@@ -64,16 +63,18 @@ def _generator(code_id: str = None):
             return render_template("QR/generator.html", form=form)
 
 
-@qr.route('/qr/scan/')
-@qr.route('/qr/scan/<string:code_id>/')
+@qr.route('/qr/scan/', methods=['POST', 'GET'])
+@qr.route('/qr/scan/<string:code_id>/', methods=['POST', 'GET'])
 @login_required
 def _scanner(code_id: str = None):
+    form = QRScanner()
+
     if code_id is None:
-        return render_template('QR/scanner.html')
+        return render_template('QR/scanner.html', form=form)
 
     qr_code = QRModel.query.filter_by(uuid=code_id).first()
     if qr_code is None:
-        return render_template('QR/scanner.html')
+        return render_template('QR/scanner.html', form=form)
 
     ##########################################################
     user = UserModel.query.filter_by(username=session['username']).first()
@@ -93,7 +94,7 @@ def _scanner(code_id: str = None):
             user.points += qr_code.points
 
         if str(qr_code.id) in qr_code_list:
-            return render_template('QR/scanner.html')
+            return render_template('QR/scanner.html', found=True)
 
     # If QR code is able to be scanned multiple times
     else:

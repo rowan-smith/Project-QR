@@ -5,22 +5,28 @@
 {% block content %}
 
     {#QR CODE VALIDATOR#}
-    <div>
-        {% if code %}
-            <div>
-                <p>Congratulations! You found {{ code }}!</p>
-            </div>
-        {% else %}
-            <div>
-                <br>
-                <p>You Have Already Scanned This QR Code!</p>
-                <br>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
-                            allowfullscreen></iframe>
-                </div>
-            </div>
-        {% endif %}
-    </div>
+    {% if code %}
+        <h1>Congratulations!</h1>
+        <h3>You found {{ code.name }}!</h3>
+
+    {% elif found %}
+        <br>
+        <h1>You Have Already Scanned This QR Code!</h1>
+        <br>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+                    allowfullscreen></iframe></div>
+
+    {% else %}
+        <br>
+        <h1>QR Scanner Page</h1>
+        <br>
+{#        <form class="form-signin" method="POST">#}
+{#            {{ form.csrf_token }}#}
+{#            {{ form.code(class_="form-control", placeholder="Code", value=value) }}#}
+{#            <br>#}
+{#            {{ form.generate_code(class_="btn btn-lg btn-success btn-block") }}#}
+{#        </form>#}
+    {% endif %}
 
 {%- endblock %}
