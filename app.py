@@ -36,6 +36,7 @@ app.register_blueprint(index)
 app.register_blueprint(auth)
 app.register_blueprint(account)
 app.register_blueprint(qr)
+app.register_blueprint(leaderboard)
 
 # Error handle 404 (Page Not Found)
 @app.errorhandler(404)

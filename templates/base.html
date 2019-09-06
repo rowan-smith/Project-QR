@@ -45,10 +45,8 @@
             <ul class="navbar-nav mr-auto">
 
                 {# NAVIGATION LINKS #}
-                {{ nav_link("index._index", "Home") }}
-
                 {% if 'username' in session %}
-                    {{ nav_link("account._account", "Leaderboard") }}
+                    {{ nav_link("leaderboard._points", "Leaderboard") }}
                 {% endif %}
 
                 {# ADMIN NAV ITEMS #}

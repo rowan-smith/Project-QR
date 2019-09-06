@@ -11,7 +11,7 @@ QR_URL = "http://127.0.0.1"
 SCAN_URL = "https://timtamtime.pythonanywhere.com"
 
 
-@qr.route('/qr/codes', methods=['POST', 'GET'])
+@qr.route('/qr/codes/', methods=['POST', 'GET'])
 @login_required
 def _codes():
 
@@ -33,7 +33,7 @@ def _codes():
 
 @qr.route('/qr/generator/')
 @qr.route('/qr/generator/<string:content>/')
-@qr.route('/qr/generator/<string:content>/<int:size>')
+@qr.route('/qr/generator/<string:content>/<int:size>/')
 @login_required
 def _generator(*, content: str = SCAN_URL, size: int = 15, colour: str = 'white', image: str = 'images/IT@JCU Logo.jpg'):
 
@@ -43,7 +43,7 @@ def _generator(*, content: str = SCAN_URL, size: int = 15, colour: str = 'white'
     abort(404)
 
 
-@qr.route('/qr/scanner')
+@qr.route('/qr/scanner/')
 @login_required
 def _scanner():
     if len(request.values) == 0:

@@ -11,11 +11,11 @@ from forms import RegistrationForm
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/signin', methods=['GET', 'POST'])
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/signin/', methods=['GET', 'POST'])
+@auth.route('/login/', methods=['GET', 'POST'])
 def _login():
     if current_user.is_authenticated:
-        return redirect(url_for('account._account'))
+        return redirect(url_for('leaderboard._points'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -51,16 +51,16 @@ def _login():
         else:
             session['is_admin'] = False
 
-        return redirect(url_for('account._account'))
+        return redirect(url_for('leaderboard._points'))
 
     return render_template('auth/login.html', form=form)
 
 
-@auth.route('/signup', methods=['GET', 'POST'])
-@auth.route('/register', methods=['GET', 'POST'])
+@auth.route('/signup/', methods=['GET', 'POST'])
+@auth.route('/register/', methods=['GET', 'POST'])
 def _register():
     if current_user.is_authenticated:
-        return redirect(url_for('account._account'))
+        return redirect(url_for('leaderboard._points'))
 
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -100,13 +100,13 @@ def _register():
             login_user(UserModel.query.filter_by(name=session['name']).first(), remember=False, fresh=True, duration=timedelta(days=90))
 
         # Log user in
-        return redirect(url_for('account._account'))
+        return redirect(url_for('leaderboard._points'))
 
     return render_template('auth/register.html', form=form)
 
 
-@auth.route('/signout')
-@auth.route('/logout')
+@auth.route('/signout/')
+@auth.route('/logout/')
 def _logout():
     # Logs current user out
     logout_user()

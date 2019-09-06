@@ -7,23 +7,19 @@ from models import UserModel
 account = Blueprint('account', __name__)
 
 
-@account.route('/points')
+@account.route('/points/')
 @login_required
 def _points():
-    return render_template("account/account.html")
+    return "<h1>Account Points</h1>"
 
 
-@account.route('/account')
+@account.route('/account/')
 @login_required
 def _account():
-    session['points'] = UserModel.query.filter_by(name=session['name']).first().points
-    return render_template('account/account.html', session=session, users=UserModel.query.order_by(UserModel.points.desc()).all())
+    return "<h1>Account</h1>"
 
 
-@account.route('/settings')
+@account.route('/settings/')
 @login_required
 def _settings():
-    # TODO create a settings page
-    # user = User.query.get(current_user.id)
-    # print(user)
-    return render_template('account/account.html')
+    return "<h1>Account Settings</h1>"
