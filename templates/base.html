@@ -7,9 +7,9 @@
 
 <head>
     {% block head %}
-        <link rel="icon" type="image/png" href="../static/images/favicon.png">
-        <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="../static/css/site_styles.css"/>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/site_styles.css') }}"/>
         <title>{% block title %}{% endblock %}</title>
 
         {# This makes the website responsive; all elemenets need to be responsive for this to work. #}
@@ -33,7 +33,7 @@
     {% block navbar %}
 
         {# NAVIGATION LOGO #}
-        {{ nav_logo("index._index", "../static/images/favicon.png", "IT@JCU") }}
+        {{ nav_logo("index._index", url_for('static', filename='images/favicon.png'), "IT@JCU") }}
 
         {# COLLAPSE NAVIGATION BUTTON #}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -1,12 +1,14 @@
-{% extends "base.html" %}
+{%- extends "base.html" %}
 
 {# # TODO Work out why navbar won't work on this page #}
-{% block navbar %}{% endblock %}
+{#{% block navbar %}{% endblock %}#}
 
 {% block title %}QR Generator{% endblock %}
 
 {% block content %}
+
+    <br>
     <img class="img-responsive img-fluid"
-         src="{{ qrcode(url, error_correction='H', icon_img=image, factor=3, back_color=colour, fill_color='black') }}"
+         src="{{ qrcode(url, box_size=size, error_correction='H', icon_img=image, factor=3, back_color=colour, fill_color='black') }}"
          alt="QR-Code">
-{% endblock %}
+{%- endblock %}
