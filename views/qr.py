@@ -7,9 +7,6 @@ from models import QRModel, UserModel
 
 qr = Blueprint('qr', __name__)
 
-QR_URL = "http://127.0.0.1"
-SCAN_URL = "https://timtamtime.pythonanywhere.com"
-
 
 @qr.route('/qr/codes/', methods=['POST', 'GET'])
 @login_required
@@ -52,12 +49,13 @@ def _generator(code_id: str = None):
     else:
         if session['is_admin']:
             if app.config['DEBUG']:
-                scan_url = "http://127.0.0.1"
+                scan_url = f"http://127.0.0.1:{request.host}".split(":")[1] if\
+                    f"{request.host}".split(":")[1] != "80" else "http://127.0.0.1"
             else:
                 scan_url = "https://timtamtime.pythonanywhere.com"
 
-            data = {'CONTENT': f"{scan_url}{url_for('qr._scanner')}/{code_id}",
-                    'SIZE': 15,
+            data = {'CONTENT': f"{scan_url}{url_for('qr._scanner')}{code_id}/",
+                    'SIZE': 20,
                     'COLOR': 'white',
                     'IMAGE': 'images/IT@JCU Logo.jpg'}
 

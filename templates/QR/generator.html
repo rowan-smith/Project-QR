@@ -25,5 +25,8 @@
         <img class="img-responsive img-fluid"
              src="{{ qrcode(data["CONTENT"], box_size=data["SIZE"], error_correction='H', icon_img=data["IMAGE"], factor=3, back_color=data["COLOR"], fill_color='black') }}"
              alt="QR-Code">
+        <br>
+        <br>
+        <br>
     {% endif %}
 {%- endblock %}
