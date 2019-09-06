@@ -50,7 +50,7 @@
                     <tr>
                         <td>{{ i.name }}</td>
                         <td>{{ i.uuid }}</td>
-                        <td><a href="{{ url_for('qr._generator') }}{{ i.uuid }}" target="_blank">Link</a></td>
+                        <td><a href="{{ url_for('qr._generator') }}{{ i.uuid }}/" target="_blank">Link</a></td>
                         <td><a href="{{ url_for('qr._scanner', code=i.uuid) }}" target="_blank">Scanner Link</a></td>
                         <td>{{ i.points }}</td>
                     </tr>
