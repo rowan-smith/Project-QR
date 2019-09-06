@@ -87,7 +87,7 @@
     width: 4em;
 }
 
-.table-hover thead tr:hover th, .table-hover tbody tr:hover td {
+.table-hover tbody tr:hover td {
     background-color: #ff0;
 }
 
