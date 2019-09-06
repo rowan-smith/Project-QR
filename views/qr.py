@@ -1,8 +1,8 @@
-from flask import render_template, Blueprint, request, session, abort, redirect, url_for, escape
+from flask import render_template, Blueprint, request, session, abort, redirect, url_for, escape, flash
 from flask_login import login_required
 
-from app import db
-from forms import QRCreator
+from app import db, app
+from forms import QRCreator, QRGenerator
 from models import QRModel, UserModel
 
 qr = Blueprint('qr', __name__)
@@ -31,25 +31,51 @@ def _codes():
     abort(404)
 
 
-@qr.route('/qr/generator/')
-@qr.route('/qr/generator/<string:content>/')
-@qr.route('/qr/generator/<string:content>/<int:size>/')
+@qr.route('/qr/generator/', methods=['POST', 'GET'])
+@qr.route('/qr/generator/<string:code_id>/', methods=['POST', 'GET'])
 @login_required
-def _generator(*, content: str = SCAN_URL, size: int = 15, colour: str = 'white', image: str = 'images/IT@JCU Logo.jpg'):
+def _generator(code_id: str = None):
+    form = QRGenerator()
+    if code_id is None:
 
-    if session["is_admin"]:
-        return render_template('QR/generator.html', url=f"{SCAN_URL}{url_for('qr._scanner')}?code={content}",
-                               size=size, colour=colour, image=image)
-    abort(404)
+        if form.validate_on_submit():
+
+            data = {'CONTENT': form.code_content.data,
+                    'SIZE': int(form.code_size.data),
+                    'COLOR': form.code_color.data,
+                    'IMAGE': form.code_image.data}
+
+            return render_template("QR/generator.html", form=form, data=data)
+
+        return render_template("QR/generator.html", form=form)
+
+    else:
+        if session['is_admin']:
+            if app.config['DEBUG']:
+                scan_url = "http://127.0.0.1"
+            else:
+                scan_url = "https://timtamtime.pythonanywhere.com"
+
+            data = {'CONTENT': f"{scan_url}{url_for('qr._scanner')}/{code_id}",
+                    'SIZE': 15,
+                    'COLOR': 'white',
+                    'IMAGE': 'images/IT@JCU Logo.jpg'}
+
+            return render_template("QR/generator.html", data=data)
+        else:
+            return render_template("QR/generator.html", form=form)
 
 
-@qr.route('/qr/scanner/')
+@qr.route('/qr/scan/')
+@qr.route('/qr/scan/<string:code_id>/')
 @login_required
-def _scanner():
-    if len(request.values) == 0:
+def _scanner(code_id: str = None):
+    if code_id is None:
         return render_template('QR/scanner.html')
 
-    qr_code = QRModel.query.filter_by(uuid=request.values['code']).first()
+    qr_code = QRModel.query.filter_by(uuid=code_id).first()
+    if qr_code is None:
+        return render_template('QR/scanner.html')
 
     ##########################################################
     user = UserModel.query.filter_by(username=session['username']).first()

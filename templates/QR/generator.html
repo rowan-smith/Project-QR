@@ -4,8 +4,26 @@
 
 {% block content %}
 
-    <br>
-    <img class="img-responsive img-fluid"
-         src="{{ qrcode(url, box_size=size, error_correction='H', icon_img=image, factor=3, back_color=colour, fill_color='black') }}"
-         alt="QR-Code">
+    {% if not data %}
+        <br>
+        <h1 class="h3 mb-3 font-weight-normal">QR Code Generator</h1>
+        <br>
+
+        <form class="form-signin" method="POST">
+            {{ form.csrf_token }}
+            {{ form.code_content(class_="form-control", placeholder="QR Content") }}
+            {{ form.code_size(class_="form-control", placeholder="Size") }}
+            {{ form.code_color(class_="form-control", placeholder="Color") }}
+            {{ form.code_image(class_="form-control", placeholder="Image URL") }}
+            <br>
+            {{ form.generate_code(class_="btn btn-lg btn-success btn-block") }}
+        </form>
+    {% else %}
+        <br>
+        <a href="{{ url_for("qr._generator") }}" class="btn btn-lg btn-success btn-block">Generate New Code?</a>
+        <br>
+        <img class="img-responsive img-fluid"
+             src="{{ qrcode(data["CONTENT"], box_size=data["SIZE"], error_correction='H', icon_img=data["IMAGE"], factor=3, back_color=data["COLOR"], fill_color='black') }}"
+             alt="QR-Code">
+    {% endif %}
 {%- endblock %}
