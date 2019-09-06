@@ -87,8 +87,16 @@
     width: 4em;
 }
 
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #dcdcdc;
+}
+
 .table-hover tbody tr:hover td {
     background-color: #ff0;
+}
+
+tr {
+   line-height: 5px;
 }
 
 
