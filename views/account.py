@@ -1,25 +1,22 @@
-from flask import render_template, Blueprint, session
-from flask_login import login_required, current_user
-
-# from app.models.User import User
-from models import UserModel
+from flask import render_template, Blueprint
+from flask_login import login_required
 
 account = Blueprint('account', __name__)
 
 
-@account.route('/points/')
+@account.route('/account/points/')
 @login_required
 def _points():
-    return "<h1>Account Points</h1>"
+    return render_template("account/points.html")
 
 
 @account.route('/account/')
 @login_required
 def _account():
-    return "<h1>Account</h1>"
+    return render_template("account/account.html")
 
 
-@account.route('/settings/')
+@account.route('/account/settings/')
 @login_required
 def _settings():
-    return "<h1>Account Settings</h1>"
+    return render_template("account/settings.html")

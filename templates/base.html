@@ -47,6 +47,18 @@
                 {# NAVIGATION LINKS #}
                 {% if 'username' in session %}
                     {{ nav_link("leaderboard._points", "Leaderboard") }}
+
+                    {# ACCOUNT DROPDOWN BOX #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+
+{#                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#                            {{ dropdown_item("account._account", "Account") }}#}
+{#                            {{ dropdown_item("account._points", "Points") }}#}
+{#                            {{ dropdown_item("account._settings", "Settings") }}#}
+{#                        </div>#}
+                    </li>
                 {% endif %}
 
                 {# ADMIN NAV ITEMS #}
@@ -66,15 +78,15 @@
                     </li>
 
                     {# ADMIN DROPDOWN BOX #}
-                    {#                    <li class="nav-item dropdown">#}
-                    {#                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-                    {#                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>#}
-                    {##}
-                    {#                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-                    {##}
-                    {#                        {{ dropdown_item("#", "Admin List") }}#}
-                    {#                        </div>#}
-                    {#                    </li>#}
+{#                    <li class="nav-item dropdown">#}
+{#                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
+{#                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>#}
+{##}
+{#                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#                            {{ dropdown_item("admin._dashboard", "Dashboard") }}#}
+{#                            {{ dropdown_item("admin._users", "Users") }}#}
+{#                        </div>#}
+{#                    </li>#}
                 {% endif %}
             </ul>
 
