@@ -6,6 +6,7 @@
 {% block title %}QR Generator{% endblock %}
 
 {% block content %}
-     <img class="img-responsive img-fluid" src="{{ qrcode(url, box_size=size, error_correction='H', icon_img=image, factor=3, back_color=colour, fill_color='black') }}"
+    <img class="img-responsive img-fluid"
+         src="{{ qrcode(url, error_correction='H', icon_img=image, factor=3, back_color=colour, fill_color='black') }}"
          alt="QR-Code">
 {% endblock %}
