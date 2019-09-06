@@ -4,42 +4,28 @@
 
 {% block content %}
 
-    {#    {% for item in form.errors.items() %}#}
-    {#        <h1 class="alert-info">{{ item }}</h1>#}
-    {#    {% endfor %}#}
+    <br>
+    <h1 class="h3 mb-3 font-weight-normal">Tim Tam Time QR-Code Login</h1>
 
-    {#    <div class="jumbotron d-flex align-items-center">#}
-    {#        <div class="container">#}
-    {#            <p>Centered Text</p>#}
-    {#        </div>#}
-    {#    </div>#}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert-danger">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-    <h3>Tim Tam Time QR-Code Login</h3>
-
-    <div class="jumbotron align-items-center d-flex justify-content-center align-middle h-auto">
-        <div class="container text-center">
-            <form method="POST">
-                {{ form.csrf_token }}
-                <div class="form-group">
-                    {#                {{ form.username.label }}#}
-                    {{ form.username(class_="form-control", placeholder="Username") }}
-                </div>
-
-                <div class="form-group">
-                    {#                {{ form.password.label }}#}
-                    {{ form.password(class_="form-control", placeholder="Password") }}
-                </div>
-
-                <div class="form-check">
-                    {{ form.remember_me(class_="form-check-label") }}
-                    {{ form.remember_me.label }}
-                </div>
-
-                {{ form.login(class_="btn btn-primary") }}
-            </form>
-            <div class="dropdown-divider"></div>
-            <p>Not Registered? <a href="{{ url_for('auth._register') }}">Create an account!</a></p>
+    <form class="form-signin" method="POST">
+        {{ form.csrf_token }}
+        <br>
+        {{ form.username(class_="form-control", placeholder="Username") }}
+        {{ form.password(class_="form-control", placeholder="Password") }}
+        <div class="checkbox">
+            {{ form.remember_me.label }}
+            {{ form.remember_me(class_="form-check-label") }}
         </div>
-    </div>
+        {{ form.login(class_="btn btn-lg btn-success btn-block") }}
+        <p>Not Registered? <a href="{{ url_for('auth._register') }}">Create an account!</a></p>
+    </form>
 
 {%- endblock %}

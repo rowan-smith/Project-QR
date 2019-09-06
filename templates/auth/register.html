@@ -4,48 +4,31 @@
 
 {% block content %}
 
-    <div>
-        <h3>Tim Tam Time QR-Code Register</h3>
-    </div>
+    <br>
+    <h1 class="h3 mb-3 font-weight-normal">Tim Tam Time QR-Code Register</h1>
 
-{#    {% for item in form.errors.items() %}#}
-{#        <h1 class="alert-info">{{ item }}</h1>#}
-{#    {% endfor %}#}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert-danger">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-
-    {#REGISTER FORM START#}
-    <form method="post">
-
-        <div class="center_vertical">
-            {{ form.csrf_token }}
-            <p>
-                {{ form.name.label }}
-                {{ form.name }}
-            </p>
-            <p>
-                {{ form.username.label }}
-                {{ form.username }}
-            </p>
-            <p>
-                {{ form.email.label }}
-                {{ form.email }}
-            </p>
-            <p>
-                {{ form.password.label }}
-                {{ form.password }}
-            </p>
-            <p>
-                {{ form.confirm.label }}
-                {{ form.confirm }}
-            </p>
-            <p>
-                {{ form.remember_me }}
-                {{ form.remember_me.label }}
-            </p>
-            {{ form.register }}
-            <p>Already Registered? <a href="{{ url_for('auth._login') }}">Login!</a></p>
+    <form class="form-signin" method="POST">
+        {{ form.csrf_token }}
+        <br>
+        {{ form.name(class_="form-control", placeholder="Name") }}
+        {{ form.username(class_="form-control", placeholder="Username") }}
+        {{ form.email(class_="form-control", placeholder="Email") }}
+        {{ form.password(class_="form-control", placeholder="Password") }}
+        {{ form.confirm(class_="form-control", placeholder="Confirm Password") }}
+        <div class="checkbox">
+            {{ form.remember_me.label }}
+            {{ form.remember_me(class_="form-check-label") }}
         </div>
+        {{ form.register(class_="btn btn-lg btn-success btn-block") }}
+        <p>Already Registered? <a href="{{ url_for('auth._login') }}">Login!</a></p>
     </form>
-    {#REGISTER FORM END#}
 
 {%- endblock %}

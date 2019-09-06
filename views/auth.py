@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from flask import render_template, redirect, url_for, Blueprint, request, abort, session
+from flask import render_template, redirect, url_for, Blueprint, request, abort, session, flash
 from flask_login import current_user, login_user, logout_user
 
 from app import db
@@ -22,6 +22,11 @@ def _login():
 
         # Checks if user exists
         user = UserModel.query.filter_by(username=request.form['username']).first()
+
+        # Check if username already exists in database
+        if user is None:
+            flash('username does not exist')
+            return render_template('auth/login.html', form=form)
 
         # Checks if password matches.
         if not user.check_password(request.form['password']):
@@ -62,25 +67,27 @@ def _register():
 
         ####################################################
 
-        # # Check if username already exists in database
-        # if UserModel.query.filter_by(username=form.username.raw_data).first() is not None:
-        #     return render_template('auth/register.html')
-        #
-        # # # Check if email already exists in database
-        # if UserModel.query.filter_by(email=form.email.raw_data).first() is not None:
-        #     return render_template('auth/register.html')
+        # Check if username already exists in database
+        if UserModel.query.filter_by(username=form.username.raw_data[0]).first() is not None:
+            flash('Username already exists')
+            return render_template('auth/register.html', form=form)
+
+        # Check if email already exists in database
+        if UserModel.query.filter_by(email=form.email.raw_data[0]).first() is not None:
+            flash('Email already exists')
+            return render_template('auth/register.html', form=form)
 
         # User register creation and user add to SQLAlchemy
-        db.session.add(UserModel(form.name.raw_data,
-                                 form.username.raw_data,
-                                 form.email.raw_data,
-                                 form.password.raw_data))
+        db.session.add(UserModel(form.name.raw_data[0],
+                                 form.username.raw_data[0],
+                                 form.email.raw_data[0],
+                                 form.password.raw_data[0]))
         db.session.commit()
 
         # Add user info to session for use later in HTML
-        session['name'] = form.name.raw_data
-        session['username'] = form.username.raw_data
-        session['email'] = form.username.raw_data
+        session['name'] = form.name.raw_data[0]
+        session['username'] = form.username.raw_data[0]
+        session['email'] = form.username.raw_data[0]
         session['points'] = None
         session.permanent = True
 
