@@ -38,7 +38,7 @@
                 <thead>
                 <tr class="bg-success">
                     <th scope="col">Location Name</th>
-                    <th scope="col">ID</th>
+                    {#<th scope="col">ID</th>#}
                     <th scope="col">QR Codes</th>
                     <th scope="col">Scanner Links</th>
                     <th scope="col">Points</th>
@@ -49,7 +49,7 @@
                 {% for i in qr_codes %}
                     <tr>
                         <td>{{ i.name }}</td>
-                        <td>{{ i.uuid }}</td>
+                        {#<td>{{ i.uuid }}</td>#}
                         <td><a href="{{ url_for('qr._generator') }}{{ i.uuid }}/" target="_blank">Link</a></td>
                         <td><a href="{{ url_for('qr._scanner', code=i.uuid) }}" target="_blank">Scanner Link</a></td>
                         <td>{{ i.points }}</td>
