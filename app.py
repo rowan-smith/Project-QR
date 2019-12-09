@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
@@ -68,17 +68,10 @@ def unhandled_exception(error):
 def load_user(user_id):
     return UserModel.query.get(user_id)
 
-#
+
 # @app.before_request
 # def load_logged_in_user():
-#     user_id = session.get('user_id')
-#
-#     if user_id is None:
-#         g.user = None
-#     else:
-#         g.user = get_db().execute(
-#             'SELECT * FROM user WHERE id = ?', (user_id,)
-#         ).fetchone()
+#     user = UserModel.query.filter_by(name=session.get("name")).first()
 
 
 if __name__ == '__main__':
